@@ -26,35 +26,19 @@ class ViewController: NSViewController {
                 let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
                 let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
                 do {
+                    let data = try Data(contentsOf: setAGPMInjectorPath)
+                    let decoder = PropertyListDecoder()
+                    let AGPMListData = try decoder.decode(GetAGPMInfo.self, from: data)
+                    print(AGPMListData)
                     try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
-                    try fileManager.copyItem(at: setAGPMInjectorPath, to: InfoPlistfilePath)
-        //        } catch {
-        //            print(error)
-        //        }
-        
-        // Trying to set the RawValue of VendorIDDeviceID in the GetAGPMInfo struct
-        //        let vendorID = "1002"
-        //        let deviceID = "2001"
-        //        let bringTogether = "Vendor\(vendorID)Device\(deviceID)"
-        //        let test2: GetAGPMInfo.vendor.CodingKeys.RawValue = bringTogether
-        
-        
-        
-        // Decode the Info.plist using the structure of GetAGPMInfo and GetAGDPInfo
-//        do {
-            let data = try Data(contentsOf: getAGPMFilePathURL)
-            let decoder = PropertyListDecoder()
-            let AGPMListData = try decoder.decode(GetAGPMInfo.self, from: data)
-            let someSettings = AGPMListData
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .xml
-            let bundleIdentifer = try decoder.decode(GetAGPMInfo.AGPM.self, from: data)
-            print(bundleIdentifer)
-            let dataSet = try encoder.encode(someSettings)
-            try dataSet.write(to: InfoPlistfilePath)
-        } catch {
-            print(error)
+                    let someSettings = AGPMListData
+                    let encoder = PropertyListEncoder()
+                    encoder.outputFormat = .xml
+                    let dataSet = try encoder.encode(someSettings)
+                    try dataSet.write(to: InfoPlistfilePath)
+                } catch {
+                    print(error)
         }
         
         //
