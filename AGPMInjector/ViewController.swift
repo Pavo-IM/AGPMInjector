@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  AGPMInjector
 //
-//  Created by Henry Brock on 12/28/18.
+//  Created by Pavo on 12/28/18.
 //  Copyright © 2018 Pavo. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Get the URL of the Info.plist from AppleGraphicsPowerManagement.kext.
+        // Get the URL of the Info.plist path from AppleGraphicsPowerManagement.kext.
         let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
 
@@ -22,34 +22,36 @@ class ViewController: NSViewController {
                 let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
                 let setInforPlistLocation = "Info.plist"
                 let fileManager = FileManager.default
-                let setAGPMInjectorPath = Bundle.main.url(forResource: "AGPMInjector", withExtension: "plist")!
+//                let setAGPMInjectorPath = Bundle.main.url(forResource: "AGPMInjector", withExtension: "plist")!
                 let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
                 let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
                 do {
-                    let data = try Data(contentsOf: setAGPMInjectorPath)
+//                    let bundleID = "com.apple.driver.toledaAGPM"
+//                    let bundleName = "toledaAGPM"
+//                    let bundleShortVersionName = "2.0.0-toledaAGPM"
+//                    let buildMachine = "14A100"
+//                    let region = "English"
+//                    let infoString = "Copyright © 2014 Apple All rights reserved."
+//                    let dictVersion = "6.0"
+//                    let packageType = "KEXT"
+//                    let bundleSig = "????"
+//                    let bundleVersion = "1.0.0"
+//                    let copyright = "Copyright © 2014 Apple. All rights reserved."
+//                    let bundleRequire = "Local-Root"
+                    let data = try Data(contentsOf: getAGPMFilePathURL)
                     let decoder = PropertyListDecoder()
                     let AGPMListData = try decoder.decode(GetAGPMInfo.self, from: data)
                     print(AGPMListData)
                     try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
-                    let someSettings = AGPMListData
-                    let encoder = PropertyListEncoder()
-                    encoder.outputFormat = .xml
-                    let dataSet = try encoder.encode(someSettings)
-                    try dataSet.write(to: InfoPlistfilePath)
+//                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+//                    let someSettings = testData
+//                    let encoder = PropertyListEncoder()
+//                    encoder.outputFormat = .xml
+//                    let dataSet = try encoder.encode(someSettings)
+//                    try dataSet.write(to: InfoPlistfilePath)
                 } catch {
                     print(error)
         }
-        
-        //
-        //        do {
-        //            let data = try Data(contentsOf: getAGDPFilePathURL)
-        //            let decoder = PropertyListDecoder()
-        //            let AGDPListData = try decoder.decode(GetAGDPInfo.self, from: data)
-        //            print([AGDPListData])
-        //            } catch {
-        //                NSLog(error as! String)
-        //            }
     }
 
     override var representedObject: Any? {
