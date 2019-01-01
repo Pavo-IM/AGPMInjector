@@ -18,39 +18,40 @@ class ViewController: NSViewController {
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
 
         
-        // This is for writing the AGPMInjector.kext/Contents directory to the users Desktop and copying AGPMInjector.plist into that directory as Info.plist
-                let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
-                let setInforPlistLocation = "Info.plist"
-                let fileManager = FileManager.default
-//                let setAGPMInjectorPath = Bundle.main.url(forResource: "AGPMInjector", withExtension: "plist")!
-                let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
-                let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
-                let bundleID = "com.apple.driver.AGPMInjector"
-                let bundleName = "AGPMInjector"
-                let bundleShortVersionName = "1.0-AGPMInjector"
-                let buildMachine = "14A100"
-                let region = "English"
-                let infoString = "Copyright © 2014 Apple All rights reserved."
-                let dictVersion = "6.0"
-                let packageType = "KEXT"
-                let bundleSig = "????"
-                let bundleVersion = "1.0.0"
-                let copyright = "Copyright © 2014 Apple. All rights reserved."
-                let bundleRequire = "Local-Root"
-                do {
-                    let data = try Data(contentsOf: getAGPMFilePathURL)
-                    let decoder = PropertyListDecoder()
-                    let plist = try decoder.decode(Plist.self, from: data)
-                    print(plist)
-//                    try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-//                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
-//                    let someSettings = testData
-//                    let encoder = PropertyListEncoder()
-//                    encoder.outputFormat = .xml
-//                    let dataSet = try encoder.encode(someSettings)
-//                    try dataSet.write(to: InfoPlistfilePath)
-                } catch {
-                    print(error)
+        // Write the AGPMInjector.kext/Contents directory to the users Desktop and copying AGPMInjector.plist into that directory as Info.plist
+        let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
+        let setInforPlistLocation = "Info.plist"
+        let fileManager = FileManager.default
+        let setAGPMInjectorPath = Bundle.main.url(forResource: "AGPMInjector", withExtension: "plist")!
+        let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
+        let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
+        
+        
+        // Set the default properties of the root section of the plist
+        let bundleID = "com.apple.driver.AGPMInjector"
+        let bundleName = "AGPMInjector"
+        let bundleShortVersionName = "1.0-AGPMInjector"
+        let buildMachine = "14A100"
+        let region = "English"
+        let infoString = "Copyright © 2014 Apple All rights reserved."
+        let dictVersion = "6.0"
+        let packageType = "KEXT"
+        let bundleSig = "????"
+        let bundleVersion = "1.0.0"
+        let copyright = "Copyright © 2014 Apple. All rights reserved."
+        let bundleRequire = "Local-Root"
+        
+        
+        do {
+            // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+            try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+            let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+            let encoder = PropertyListEncoder()
+            encoder.outputFormat = .xml
+            let dataSet = try encoder.encode(someSettings)
+            try dataSet.write(to: InfoPlistfilePath)
+        } catch {
+            print(error)
         }
     }
 
