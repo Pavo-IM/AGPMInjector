@@ -4,3 +4,4 @@ AGPMInjector.xcodeproj/project.pbxproj
 *.entitlements
 *.pbxproj
 *.xcuserstate
+.DS_Store

@@ -25,24 +25,24 @@ class ViewController: NSViewController {
 //                let setAGPMInjectorPath = Bundle.main.url(forResource: "AGPMInjector", withExtension: "plist")!
                 let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
                 let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
+                let bundleID = "com.apple.driver.AGPMInjector"
+                let bundleName = "AGPMInjector"
+                let bundleShortVersionName = "1.0-AGPMInjector"
+                let buildMachine = "14A100"
+                let region = "English"
+                let infoString = "Copyright © 2014 Apple All rights reserved."
+                let dictVersion = "6.0"
+                let packageType = "KEXT"
+                let bundleSig = "????"
+                let bundleVersion = "1.0.0"
+                let copyright = "Copyright © 2014 Apple. All rights reserved."
+                let bundleRequire = "Local-Root"
                 do {
-//                    let bundleID = "com.apple.driver.toledaAGPM"
-//                    let bundleName = "toledaAGPM"
-//                    let bundleShortVersionName = "2.0.0-toledaAGPM"
-//                    let buildMachine = "14A100"
-//                    let region = "English"
-//                    let infoString = "Copyright © 2014 Apple All rights reserved."
-//                    let dictVersion = "6.0"
-//                    let packageType = "KEXT"
-//                    let bundleSig = "????"
-//                    let bundleVersion = "1.0.0"
-//                    let copyright = "Copyright © 2014 Apple. All rights reserved."
-//                    let bundleRequire = "Local-Root"
                     let data = try Data(contentsOf: getAGPMFilePathURL)
                     let decoder = PropertyListDecoder()
-                    let AGPMListData = try decoder.decode(GetAGPMInfo.self, from: data)
-                    print(AGPMListData)
-                    try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                    let plist = try decoder.decode(Plist.self, from: data)
+                    print(plist)
+//                    try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
 //                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
 //                    let someSettings = testData
 //                    let encoder = PropertyListEncoder()
