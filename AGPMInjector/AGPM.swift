@@ -4,7 +4,7 @@ struct PlistGet: Codable {
     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
     let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-    let ioKitPersonalities: IOKitPersonalities
+    let IOKitPersonalities: IOKitPersonalities
     let osBundleRequired: String
     
     enum CodingKeys: String, CodingKey {
@@ -19,27 +19,23 @@ struct PlistGet: Codable {
         case cfBundleSignature = "CFBundleSignature"
         case cfBundleVersion = "CFBundleVersion"
         case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-        case ioKitPersonalities = "IOKitPersonalities"
+        case IOKitPersonalities
         case osBundleRequired = "OSBundleRequired"
     }
     
     struct IOKitPersonalities: Codable {
-        let agpm: Agpm
+        let AGPM: AGPM
         
-        enum CodingKeys: String, CodingKey {
-            case agpm = "AGPM"
-        }
-        
-        struct Agpm: Codable {
+        struct AGPM: Codable {
             let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-            let machines: [String: Machines]
+            let Machines: [String: Machines]
             
             enum CodingKeys: String, CodingKey {
                 case cfBundleIdentifier = "CFBundleIdentifier"
                 case ioClass = "IOClass"
                 case ioNameMatch = "IONameMatch"
                 case ioProviderClass = "IOProviderClass"
-                case machines = "Machines"
+                case Machines
             }
             
             struct Machines: Codable {
@@ -72,22 +68,18 @@ struct PlistSet: Codable {
     }
     
     struct IOKitPersonalities: Codable {
-        let agpm: Agpm
+        let AGPM: AGPM
         
-        enum CodingKeys: String, CodingKey {
-            case agpm = "AGPM"
-        }
-        
-        struct Agpm: Codable {
+        struct AGPM: Codable {
             let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-            let machines: Machines
+            let Machines: Machines
             
             enum CodingKeys: String, CodingKey {
                 case cfBundleIdentifier = "CFBundleIdentifier"
                 case ioClass = "IOClass"
                 case ioNameMatch = "IONameMatch"
                 case ioProviderClass = "IOProviderClass"
-                case machines = "Machines"
+                case Machines
             }
             
             struct Machines: Codable {
