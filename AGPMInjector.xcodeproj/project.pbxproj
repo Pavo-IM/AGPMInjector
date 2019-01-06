@@ -12,6 +12,7 @@
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
 		CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E521D722FE00C0A72D /* Main.storyboard */; };
 		CF8D21F021D7232400C0A72D /* AGPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21EF21D7232400C0A72D /* AGPM.swift */; };
+		CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = CFB08C8121E1BDFE008C5465 /* Readme.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		CF8D21E821D722FE00C0A72D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF8D21E921D722FE00C0A72D /* AGPMInjector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AGPMInjector.entitlements; sourceTree = "<group>"; };
 		CF8D21EF21D7232400C0A72D /* AGPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGPM.swift; sourceTree = "<group>"; };
+		CFB08C8121E1BDFE008C5465 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 		CF8D21D321D722FC00C0A72D = {
 			isa = PBXGroup;
 			children = (
+				CFB08C8121E1BDFE008C5465 /* Readme.md */,
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
 				CF8D21DD21D722FC00C0A72D /* Products */,
 			);
@@ -131,6 +134,7 @@
 			files = (
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
 				CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */,
+				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

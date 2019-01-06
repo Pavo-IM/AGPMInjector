@@ -14,6 +14,7 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var myComboBox: NSComboBox!
     override func viewDidLoad() {
+        self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height); 
         super.viewDidLoad()
         
         let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
@@ -113,7 +114,6 @@ class ViewController: NSViewController {
         
         if let Mac50619A408DB004DA = comboboxArray.index(of: "Mac-50619A408DB004DA") {
             comboboxArray.remove(at: Mac50619A408DB004DA)
-            comboboxArray.insert("MacBookPro8,1", at: Mac50619A408DB004DA)
         }
         
         if let Mac1E7E29AD0135F9BC = comboboxArray.index(of: "Mac-1E7E29AD0135F9BC") {
@@ -128,7 +128,6 @@ class ViewController: NSViewController {
         
         if let Mac65CE76090165799A = comboboxArray.index(of: "Mac-65CE76090165799A") {
             comboboxArray.remove(at: Mac65CE76090165799A)
-            comboboxArray.insert("iMac17,1", at: Mac65CE76090165799A)
         }
         
         if let Mac66E35819EE2D0D05 = comboboxArray.index(of: "Mac-66E35819EE2D0D05") {
@@ -143,7 +142,6 @@ class ViewController: NSViewController {
         
         if let Mac6F01109E16C71B86 = comboboxArray.index(of: "Mac-6F01109E16C71B86") {
             comboboxArray.remove(at: Mac6F01109E16C71B86)
-            comboboxArray.insert("MacBookAir6,2", at: Mac6F01109E16C71B86)
         }
         
         if let Mac6F01561E16C75D06 = comboboxArray.index(of: "Mac-6F01561E16C75D06") {
@@ -287,7 +285,6 @@ class ViewController: NSViewController {
         
         if let MacDB15BD556843C820 = comboboxArray.index(of: "Mac-DB15BD556843C820") {
             comboboxArray.remove(at: MacDB15BD556843C820)
-            comboboxArray.insert("iMac17,1", at: MacDB15BD556843C820)
         }
         
         if let MacE43C1C25D4880AD6 = comboboxArray.index(of: "Mac-E43C1C25D4880AD6") {
@@ -343,10 +340,19 @@ class ViewController: NSViewController {
     }
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+
         }
     }
     @IBAction func generateButton(_ sender: Any) {
+        let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
+        let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
+        
+        // Create Decoder and Encoder objects
+        let plistDecoder = PropertyListDecoder()
+        
+        // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
+        let data = try! Data(contentsOf: getAGPMFilePathURL)
+        let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
         let plistEncoder = PropertyListEncoder()
         plistEncoder.outputFormat = .xml
         // Write the AGPMInjector.kext/Contents directory to the users Desktop and copying AGPMInjector.plist into that directory as Info.plist
@@ -403,7 +409,7 @@ class ViewController: NSViewController {
             struct Machines: Codable {
                 var macPro51: MacPro
                 enum CodingKeys: String, CodingKey {
-                    case macPro51 = "MacPro1,1"
+                    case macPro51 = "iMacPro1,1"
                 }
             }
             struct MacPro: Codable {
@@ -424,7 +430,6232 @@ class ViewController: NSViewController {
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: PlistGet.CodingKeys.buildMachineOSBuild.rawValue, cfBundleDevelopmentRegion: PlistGet.CodingKeys.cfBundleDevelopmentRegion.rawValue, cfBundleGetInfoString: PlistGet.CodingKeys.cfBundleGetInfoString.rawValue, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: PlistGet.CodingKeys.cfBundleInfoDictionaryVersion.rawValue, cfBundleName: bundleName, cfBundlePackageType: PlistGet.CodingKeys.cfBundlePackageType.rawValue, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: PlistGet.CodingKeys.cfBundleVersion.rawValue, nsHumanReadableCopyright: PlistGet.CodingKeys.nsHumanReadableCopyright.rawValue, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: PlistGet.IOKitPersonalities.AGPM.CodingKeys.cfBundleIdentifier.rawValue, ioClass: PlistGet.IOKitPersonalities.AGPM.CodingKeys.ioClass.rawValue, ioNameMatch: PlistGet.IOKitPersonalities.AGPM.CodingKeys.ioNameMatch.rawValue, ioProviderClass: PlistGet.IOKitPersonalities.AGPM.CodingKeys.ioProviderClass.rawValue, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: PlistGet.CodingKeys.osBundleRequired.rawValue)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacPro5,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacPro5,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacPro4,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacPro4,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacPro6,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacPro6,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac14,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac14,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac13,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac13,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini6,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini6,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac14,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac14,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro11,5" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro11,5"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro11,4" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro11,4"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro11,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro11,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro11,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro11,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir5,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir5,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir6,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir6,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini7,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini7,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro11,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro11,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac15,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac15,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro13,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro13,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac18,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac18,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro9,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro9,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini5,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini5,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro8,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro8,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro15,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro15,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro14,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro14,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac17,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac17,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro13,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro13,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir5,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir5,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir6,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir6,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro9,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro9,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac14,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac14,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac18,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac18,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini5,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini5,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini8,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini8,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac13,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac13,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac14,4" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac14,4"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir8,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir8,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro15,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro15,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini5,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini5,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro15,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro15,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir7,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir7,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir3,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir3,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir3,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir3,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook9,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook9,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir7,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir7,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac16,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac16,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro13,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro13,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro10,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro10,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro14,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro14,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac18,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac18,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook8,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook8,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro10,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro10,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro14,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro14,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro12,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro12,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook10,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook10,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook8,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook8,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini6,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini6,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac15,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac15,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac13,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac13,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac16,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac16,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac9,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac9,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac12,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac12,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac12,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac12,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac11,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac11,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac11,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac11,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac11,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac11,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "iMac10,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "iMac10,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini4,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini4,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "Macmini3,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "Macmini3,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro8,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro8,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro8,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro8,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro7,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro7,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro6,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro6,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro6,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro6,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro5,5" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro5,5"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro5,4" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro5,4"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro5,3" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro5,3"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro5,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro5,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookPro5,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookPro5,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir4,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir4,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir4,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir4,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBookAir2,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBookAir2,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook7,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook7,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook5,2" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook5,2"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+        
+        if myComboBox.stringValue == "MacBook5,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacBook5,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             do {
                 // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
