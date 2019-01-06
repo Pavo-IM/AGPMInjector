@@ -11,6 +11,7 @@ import Cocoa
 class ViewController: NSViewController {
 
 
+    
     @IBOutlet weak var myComboBox: NSComboBox!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +21,12 @@ class ViewController: NSViewController {
         
         // Create Decoder and Encoder objects
         let plistDecoder = PropertyListDecoder()
-        let plistEncoder = PropertyListEncoder()
-        plistEncoder.outputFormat = .xml
         
         // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
         let data = try! Data(contentsOf: getAGPMFilePathURL)
         let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
         var comboboxArray = [String](plistData.IOKitPersonalities.AGPM.Machines.keys)
+        
         if let Mac27ADBB7B4CEE8E61 = comboboxArray.index(of: "Mac-27ADBB7B4CEE8E61") {
             comboboxArray.remove(at: Mac27ADBB7B4CEE8E61)
             comboboxArray.insert("iMac14,2", at: Mac27ADBB7B4CEE8E61)
@@ -340,40 +340,105 @@ class ViewController: NSViewController {
         myComboBox.addItems(withObjectValues: sortedArray)
         myComboBox.selectItem(at: sortedArray.count-1)
         
-        
-        
+    }
+    override var representedObject: Any? {
+        didSet {
+        // Update the view, if already loaded.
+        }
+    }
+    @IBAction func generateButton(_ sender: Any) {
+        let plistEncoder = PropertyListEncoder()
+        plistEncoder.outputFormat = .xml
         // Write the AGPMInjector.kext/Contents directory to the users Desktop and copying AGPMInjector.plist into that directory as Info.plist
         let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
         let setInforPlistLocation = "Info.plist"
         let fileManager = FileManager.default
         let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
         let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
-
+        
         // Set the default properties of the root section of the plist
         let bundleID = "com.apple.driver.AGPMInjector"
         let bundleName = "AGPMInjector"
         let bundleShortVersionName = "1.0-AGPMInjector"
         let bundleSig = "????"
-//
-//        // Create a object to represent the plist data to get encoded
-        let testEncoding = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, ioKitPersonalities: PlistSet.IOKitPersonalities(AGPM: PlistSet.IOKitPersonalities.AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: PlistSet.IOKitPersonalities.AGPM.Machines(macPro61: PlistSet.IOKitPersonalities.AGPM.Machines.macPro61(Gfx0: PlistSet.IOKitPersonalities.AGPM.Machines.macPro61.Gfx0(agdcEnabled: 1, heuristic: PlistSet.IOKitPersonalities.AGPM.Machines.macPro61.Gfx0.Heuristic(id: -1), maxPowerState: 15, minPowerState: 0, controlID: 1))))), osBundleRequired: plistData.osBundleRequired)
-
-        do {
-            // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
-            try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-            let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
-            let dataSet = try plistEncoder.encode(testEncoding)
-            try dataSet.write(to: InfoPlistfilePath)
-        } catch {
-            print(error)
+        
+        // Create a object to represent the plist data to get encoded
+        if myComboBox.stringValue == "iMacPro1,1" {
+            struct PlistSet: Codable {
+                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
+                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
+                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
+                let IOKitPersonalities: IOKitPersonalities
+                let osBundleRequired: String
+                enum CodingKeys: String, CodingKey {
+                    case buildMachineOSBuild = "BuildMachineOSBuild"
+                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
+                    case cfBundleGetInfoString = "CFBundleGetInfoString"
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
+                    case cfBundleName = "CFBundleName"
+                    case cfBundlePackageType = "CFBundlePackageType"
+                    case cfBundleShortVersionString = "CFBundleShortVersionString"
+                    case cfBundleSignature = "CFBundleSignature"
+                    case cfBundleVersion = "CFBundleVersion"
+                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
+                    case IOKitPersonalities
+                    case osBundleRequired = "OSBundleRequired"
+                }
+            }
+            struct IOKitPersonalities: Codable {
+                let AGPM: AGPM
+            }
+            struct AGPM: Codable {
+                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
+                let Machines: Machines
+                enum CodingKeys: String, CodingKey {
+                    case cfBundleIdentifier = "CFBundleIdentifier"
+                    case ioClass = "IOClass"
+                    case ioNameMatch = "IONameMatch"
+                    case ioProviderClass = "IOProviderClass"
+                    case Machines
+                }
+            }
+            struct Machines: Codable {
+                var macPro51: MacPro
+                enum CodingKeys: String, CodingKey {
+                    case macPro51 = "MacPro1,1"
+                }
+            }
+            struct MacPro: Codable {
+                let GFX0: GFX0
+            }
+            struct GFX0: Codable {
+                let agdcEnabled: Int
+                let Heuristic: Heuristic
+                let maxPowerState, minPowerState, controlID: Int
+                enum CodingKeys: String, CodingKey {
+                    case agdcEnabled = "AGDCEnabled"
+                    case Heuristic
+                    case maxPowerState = "max-power-state"
+                    case minPowerState = "min-power-state"
+                    case controlID = "control-id"
+                }
+            }
+            struct Heuristic: Codable {
+                let ID: Int
+            }
+            let plistToEncode = PlistSet(buildMachineOSBuild: PlistGet.CodingKeys.buildMachineOSBuild.rawValue, cfBundleDevelopmentRegion: PlistGet.CodingKeys.cfBundleDevelopmentRegion.rawValue, cfBundleGetInfoString: PlistGet.CodingKeys.cfBundleGetInfoString.rawValue, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: PlistGet.CodingKeys.cfBundleInfoDictionaryVersion.rawValue, cfBundleName: bundleName, cfBundlePackageType: PlistGet.CodingKeys.cfBundlePackageType.rawValue, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: PlistGet.CodingKeys.cfBundleVersion.rawValue, nsHumanReadableCopyright: PlistGet.CodingKeys.nsHumanReadableCopyright.rawValue, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: PlistGet.IOKitPersonalities.AGPM.CodingKeys.cfBundleIdentifier.rawValue, ioClass: PlistGet.IOKitPersonalities.AGPM.CodingKeys.ioClass.rawValue, ioNameMatch: PlistGet.IOKitPersonalities.AGPM.CodingKeys.ioNameMatch.rawValue, ioProviderClass: PlistGet.IOKitPersonalities.AGPM.CodingKeys.ioProviderClass.rawValue, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: PlistGet.CodingKeys.osBundleRequired.rawValue)
+            
+            do {
+                // Encode the Plist properties and write it to the Info.plist file being saved to the current logged in user's desktop
+                try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInforPlistLocation)")
+                let dataSet = try plistEncoder.encode(plistToEncode)
+                try dataSet.write(to: InfoPlistfilePath)
+            }
+            catch {
+                print(error.localizedDescription)
+            }
         }
+     
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
-
+    
 }
 
