@@ -7,7 +7,7 @@ AGPM Injector
 - Copy the AGPMInjector.kext to EFI/Clover/kexts/Other folder and reboot.
 
 #### Features
-- Fixes GPU Power Management for discrete GPUs on supported SMBIOS (Systems that are in the dropdown menu)
+- Fixes GPU Power Management settings for *desktop* GPUs on supported SMBIOS (Systems that are in the dropdown menu)
 - Automatically parses /System/Library/Extensions/AppleGraphicsPowerManagement.kext to generate the most up to date injector kext
 
 #### Important Information
