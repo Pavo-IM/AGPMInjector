@@ -28,6 +28,18 @@ class ViewController: NSViewController {
         let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
         var comboboxArray = [String](plistData.IOKitPersonalities.AGPM.Machines.keys)
         
+        if let MacBookAir21 = comboboxArray.index(of: "MacBookAir2,1") {
+            comboboxArray.remove(at: MacBookAir21)
+        }
+        
+        if let MacBookAir41 = comboboxArray.index(of: "MacBookAir4,1") {
+            comboboxArray.remove(at: MacBookAir41)
+        }
+        
+        if let MacBookAir42 = comboboxArray.index(of: "MacBookAir4,2") {
+            comboboxArray.remove(at: MacBookAir42)
+        }
+        
         if let Mac27ADBB7B4CEE8E61 = comboboxArray.index(of: "Mac-27ADBB7B4CEE8E61") {
             comboboxArray.remove(at: Mac27ADBB7B4CEE8E61)
             comboboxArray.insert("iMac14,2", at: Mac27ADBB7B4CEE8E61)
@@ -135,7 +147,6 @@ class ViewController: NSViewController {
         
         if let Mac66F35F19FE2A0D05 = comboboxArray.index(of: "Mac-66F35F19FE2A0D05") {
             comboboxArray.remove(at: Mac66F35F19FE2A0D05)
-            comboboxArray.insert("MacBookAir5,1", at: Mac66F35F19FE2A0D05)
         }
         
         if let Mac6F01109E16C71B86 = comboboxArray.index(of: "Mac-6F01109E16C71B86") {
