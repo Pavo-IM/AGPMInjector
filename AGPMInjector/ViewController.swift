@@ -41,7 +41,6 @@ class ViewController: NSViewController {
             }
         }
         
-        
         // Remove MacbookAir and Unknown machines and rename board-id types to model types
         removeItemsFromArray(item: "MacBookAir2,1")
         removeItemsFromArray(item: "MacBookAir4,1")
@@ -122,8 +121,17 @@ class ViewController: NSViewController {
         }
     }
     @IBAction func generateButton(_ sender: Any) {
+        // Set the default properties of the root section of the plist
+        let bundleID = "com.apple.driver.AGPMInjector"
+        let bundleName = "AGPMInjector"
+        let bundleShortVersionName = "1.0-AGPMInjector"
+        let bundleSig = "????"
         let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
+        
+        // Create Decoder and Encoder objects
+        let plistEncoder = PropertyListEncoder()
+        plistEncoder.outputFormat = .xml
         
         // Create Decoder and Encoder objects
         let plistDecoder = PropertyListDecoder()
@@ -131,21 +139,13 @@ class ViewController: NSViewController {
         // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
         let data = try! Data(contentsOf: getAGPMFilePathURL)
         let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
+        
         // Write the AGPMInjector.kext/Contents directory to the users Desktop and copying AGPMInjector.plist into that directory as Info.plist
         let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
         let setInfoPlistName = "Info.plist"
         let fileManager = FileManager.default
         let tDocumentDirectory = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first!
         let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
-        let plistEncoder = PropertyListEncoder()
-        plistEncoder.outputFormat = .xml
-        
-        
-        // Set the default properties of the root section of the plist
-        let bundleID = "com.apple.driver.AGPMInjector"
-        let bundleName = "AGPMInjector"
-        let bundleShortVersionName = "1.0-AGPMInjector"
-        let bundleSig = "????"
         
         // Create a object to represent the plist data to get encoded
         if myComboBox.stringValue == "iMacPro1,1" {
