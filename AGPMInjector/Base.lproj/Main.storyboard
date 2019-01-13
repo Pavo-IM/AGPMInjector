@@ -754,27 +754,27 @@
                                     <action selector="generateButton:" target="XfG-lQ-9wD" id="dj3-lG-nFw"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Yxw-eO-6HM">
-                                <rect key="frame" x="368" y="274" width="94" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="iGPU Enabled?" id="hky-pb-6Hc">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" id="FRP-b5-Lma">
-                                <rect key="frame" x="368" y="250" width="44" height="18"/>
+                                <rect key="frame" x="355" y="250" width="44" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Yes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OAF-C7-dEZ">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="CgF-28-oYz">
+                                <rect key="frame" x="355" y="273" width="107" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Is iGPU Enabled?" id="51H-fO-x4D">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="iGPULabel" destination="m2S-Jp-Qdl" id="eMY-Ba-okG"/>
+                        <outlet property="iGPULabel" destination="CgF-28-oYz" id="Wps-rE-i8O"/>
                         <outlet property="myComboBox" destination="epE-0h-z0T" id="VbG-FH-EvM"/>
                         <outlet property="yesChecked" destination="FRP-b5-Lma" id="jnh-ZI-3zB"/>
                     </connections>
