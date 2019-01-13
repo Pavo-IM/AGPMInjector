@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" initialViewController="B8D-0N-5wS">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -710,9 +711,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
                             <comboBox verticalHuggingPriority="750" id="epE-0h-z0T">
-                                <rect key="frame" x="148" y="277" width="188" height="26"/>
+                                <rect key="frame" x="148" y="267" width="188" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="ATg-IS-GmI">
+                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="ATg-IS-GmI">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -737,7 +738,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="maC-fy-hxb">
                                     <font key="font" metaFont="system"/>
-                                    <mutableString key="title">o Select the SMBIOS you are using and click Generate button, a AGPMInjector.kext will be generated with the correct settings in order to load AGPM for your GPU.  o Your GPU device in IOReg must be labeled as GFX0 in order for this injector kext to work properly. This can be done by either using Lilu + WhateverGreen, SSDT/DSDT injection or Device Properties in Clover config. o X86PlatformPlugin must be loaded in order for this injector kext to hook into AGPMController device.</mutableString>
+                                    <string key="title">o Select the SMBIOS you are using and click Generate button, a AGPMInjector.kext will be generated with the correct settings in order to load AGPM for your GPU.  o Your GPU device in IOReg must be labeled as GFX0 in order for this injector kext to work properly. This can be done by either using Lilu + WhateverGreen, SSDT/DSDT injection or Device Properties in Clover config. o X86PlatformPlugin must be loaded in order for this injector kext to hook into AGPMController device.</string>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -753,10 +754,29 @@
                                     <action selector="generateButton:" target="XfG-lQ-9wD" id="dj3-lG-nFw"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Yxw-eO-6HM">
+                                <rect key="frame" x="368" y="274" width="94" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="iGPU Enabled?" id="hky-pb-6Hc">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" id="FRP-b5-Lma">
+                                <rect key="frame" x="368" y="250" width="44" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Yes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OAF-C7-dEZ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="iGPULabel" destination="m2S-Jp-Qdl" id="eMY-Ba-okG"/>
                         <outlet property="myComboBox" destination="epE-0h-z0T" id="VbG-FH-EvM"/>
+                        <outlet property="yesChecked" destination="FRP-b5-Lma" id="jnh-ZI-3zB"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
