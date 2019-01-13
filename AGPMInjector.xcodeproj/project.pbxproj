@@ -25,6 +25,7 @@
 		CF8D21E921D722FE00C0A72D /* AGPMInjector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AGPMInjector.entitlements; sourceTree = "<group>"; };
 		CF8D21EF21D7232400C0A72D /* AGPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGPM.swift; sourceTree = "<group>"; };
 		CFB08C8121E1BDFE008C5465 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = iGPU_FAQs.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +42,7 @@
 		CF8D21D321D722FC00C0A72D = {
 			isa = PBXGroup;
 			children = (
+				CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */,
 				CFB08C8121E1BDFE008C5465 /* Readme.md */,
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
 				CF8D21DD21D722FC00C0A72D /* Products */,

@@ -16,7 +16,6 @@ AGPM Injector
 - Your GPU device must be labeled as GFX0 in order for the injector to hook into the AGPMController. This can be done by using [Lilu](https://github.com/acidanthera/Lilu) with [WhateverGreen](https://github.com/acidanthera/WhateverGreen), SSDT/DSDT property injection or by Device Properties in Clover config.plist.
 
 #### To-Do
-- Add support for iGPU
 - Add auto update capability
 
 #### Credits
