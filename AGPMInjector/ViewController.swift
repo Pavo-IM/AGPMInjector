@@ -24,9 +24,9 @@ class ViewController: NSViewController {
     let setInfoPlistName = "Info.plist"
     let tDocumentDirectory = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
     
+    @IBOutlet weak var popButton: NSPopUpButton!
     @IBOutlet weak var iGPULabel: NSTextField!
     @IBOutlet weak var yesChecked: NSButton!
-    @IBOutlet weak var myComboBox: NSComboBox!
     override func viewDidLoad() {
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height); 
         super.viewDidLoad()
@@ -137,10 +137,10 @@ class ViewController: NSViewController {
         renameItemInArray(olditem: "Mac-FFE5EF870D7BA81A", newitem: "iMac16,2")
         
         let sortedArray = comboboxArray.sorted()
-
-        myComboBox.removeAllItems()
-        myComboBox.addItems(withObjectValues: sortedArray)
-        myComboBox.selectItem(at: sortedArray.count-1)
+        
+        popButton.removeAllItems()
+        popButton.addItems(withTitles: sortedArray)
+        popButton.selectItem(at: 0)
         yesChecked.state = NSControlStateValueOff
         
     }
@@ -157,7 +157,7 @@ class ViewController: NSViewController {
         let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
         let filePath =  tDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
         // Create a object to represent the plist data to get encoded
-        if myComboBox.stringValue == "iMacPro1,1" {
+        if popButton.titleOfSelectedItem == "iMacPro1,1" {
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -232,7 +232,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "MacPro5,1" {
+        if popButton.titleOfSelectedItem == "MacPro5,1" {
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -305,7 +305,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "MacPro4,1" {
+        if popButton.titleOfSelectedItem == "MacPro4,1" {
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -379,7 +379,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "MacPro6,1" {
+        if popButton.titleOfSelectedItem == "MacPro6,1" {
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -453,7 +453,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac14,2" {
+        if popButton.titleOfSelectedItem == "iMac14,2" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -646,7 +646,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac13,1" {
+        if popButton.titleOfSelectedItem == "iMac13,1" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -820,7 +820,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac14,1" {
+        if popButton.titleOfSelectedItem == "iMac14,1" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -1013,7 +1013,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac15,1" {
+        if popButton.titleOfSelectedItem == "iMac15,1" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -1206,7 +1206,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac18,1" {
+        if popButton.titleOfSelectedItem == "iMac18,1" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -1439,7 +1439,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac17,1" {
+        if popButton.titleOfSelectedItem == "iMac17,1" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -1612,7 +1612,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac14,3" {
+        if popButton.titleOfSelectedItem == "iMac14,3" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -1805,7 +1805,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac18,2" {
+        if popButton.titleOfSelectedItem == "iMac18,2" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -2038,7 +2038,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac13,3" {
+        if popButton.titleOfSelectedItem == "iMac13,3" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -2212,7 +2212,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac14,4" {
+        if popButton.titleOfSelectedItem == "iMac14,4" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -2405,7 +2405,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac16,1" {
+        if popButton.titleOfSelectedItem == "iMac16,1" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -2613,7 +2613,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac18,3" {
+        if popButton.titleOfSelectedItem == "iMac18,3" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -2846,7 +2846,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac15,2" {
+        if popButton.titleOfSelectedItem == "iMac15,2" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3039,7 +3039,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac13,2" {
+        if popButton.titleOfSelectedItem == "iMac13,2" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3213,7 +3213,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac16,2" {
+        if popButton.titleOfSelectedItem == "iMac16,2" {
             if yesChecked.state == NSControlStateValueOff {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3421,7 +3421,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac12,2" {
+        if popButton.titleOfSelectedItem == "iMac12,2" {
             yesChecked.state = NSControlStateValueOff
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3496,7 +3496,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac12,1" {
+        if popButton.titleOfSelectedItem == "iMac12,1" {
             yesChecked.state = NSControlStateValueOff
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3571,7 +3571,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac11,3" {
+        if popButton.titleOfSelectedItem == "iMac11,3" {
             yesChecked.state = NSControlStateValueOff
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3646,7 +3646,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac11,2" {
+        if popButton.titleOfSelectedItem == "iMac11,2" {
             yesChecked.state = NSControlStateValueOff
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
@@ -3721,7 +3721,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac11,1" {
+        if popButton.titleOfSelectedItem == "iMac11,1" {
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3795,7 +3795,7 @@ class ViewController: NSViewController {
             }
         }
         
-        if myComboBox.stringValue == "iMac10,1" {
+        if popButton.titleOfSelectedItem == "iMac10,1" {
             if yesChecked.state == NSControlStateValueOn {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
