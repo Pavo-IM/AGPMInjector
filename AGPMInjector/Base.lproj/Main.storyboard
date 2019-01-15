@@ -710,20 +710,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="311"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
-                            <comboBox verticalHuggingPriority="750" id="epE-0h-z0T">
-                                <rect key="frame" x="148" y="267" width="188" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" completes="NO" numberOfVisibleItems="5" id="ATg-IS-GmI">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <objectValues>
-                                        <string>Item 1</string>
-                                        <string>Item 2</string>
-                                        <string>Item 3</string>
-                                    </objectValues>
-                                </comboBoxCell>
-                            </comboBox>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="K75-gj-yNU">
                                 <rect key="frame" x="180" y="203" width="120" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -771,17 +757,32 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <popUpButton verticalHuggingPriority="750" id="bEH-oe-swK">
+                                <rect key="frame" x="168" y="268" width="145" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cBc-8F-1df" id="v33-Z2-19j">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="djL-ty-7io">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="cBc-8F-1df"/>
+                                            <menuItem title="Item 2" id="hO1-Re-yaL"/>
+                                            <menuItem title="Item 3" id="5PX-UM-KEZ"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="iGPULabel" destination="CgF-28-oYz" id="Wps-rE-i8O"/>
-                        <outlet property="myComboBox" destination="epE-0h-z0T" id="VbG-FH-EvM"/>
+                        <outlet property="popButton" destination="bEH-oe-swK" id="60h-t4-J7p"/>
                         <outlet property="yesChecked" destination="FRP-b5-Lma" id="jnh-ZI-3zB"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="809"/>
+            <point key="canvasLocation" x="75" y="808.5"/>
         </scene>
     </scenes>
 </document>
