@@ -240,19 +240,17 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -320,19 +318,17 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0),controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -400,19 +396,19 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
+                    
+                    
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -480,19 +476,19 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
+                    
+                    
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -561,19 +557,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -645,12 +641,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -696,7 +692,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac142: IMac142(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac142: IMac142(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -766,19 +762,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -852,12 +848,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -882,7 +878,7 @@ class ViewController: NSViewController {
                         case id = "ID"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac131: IMac131(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac131: IMac131(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -952,19 +948,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1036,12 +1032,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -1087,7 +1083,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac141: IMac141(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac141: IMac141(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1157,19 +1153,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1241,12 +1237,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -1292,7 +1288,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac151: IMac151(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac151: IMac151(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1362,19 +1358,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1448,12 +1444,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -1537,7 +1533,7 @@ class ViewController: NSViewController {
                         case rcEvalInterval = "RC_Eval_Interval"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac181: IMac181(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac181: IMac181(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1607,19 +1603,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1692,12 +1688,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -1722,7 +1718,7 @@ class ViewController: NSViewController {
                         case id = "ID"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac171: IMac171(igpu: SkylakeIgpu(heuristic: SkylakeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac171: IMac171(igpu: SkylakeIgpu(heuristic: SkylakeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1792,19 +1788,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1876,12 +1872,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -1927,7 +1923,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac143: IMac143(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac143: IMac143(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1997,19 +1993,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2083,12 +2079,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -2172,7 +2168,7 @@ class ViewController: NSViewController {
                         case rcEvalInterval = "RC_Eval_Interval"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac182: IMac182(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac182: IMac182(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2242,19 +2238,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2328,12 +2324,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -2358,7 +2354,7 @@ class ViewController: NSViewController {
                         case id = "ID"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac133: IMac133(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac133: IMac133(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2428,19 +2424,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2512,12 +2508,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -2563,7 +2559,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac144: IMac144(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac144: IMac144(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2633,19 +2629,17 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2719,12 +2713,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -2783,7 +2777,7 @@ class ViewController: NSViewController {
                         case enableRingTableOverride = "EnableRingTableOverride"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac161: IMac161(igpu: BroadwellIgpu(boostPState: [24,24,24,24], heuristic: BroadwellHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 15, startingPstateForRingTableOverride: 11, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,19,20,21,23,24,25,26,28,30,31,33], numOfRingTableOverride: 23, ioBusynessSamplingInterval: 1, enableOverride: 1, upStep: 1, ringOverrideTable1: [8,8,8,9,10,11,13,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16], busyUpThresholdPercent: 70, gt2Floor: 12, id: 2, busyDownThresholdPercent: 50, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfThresholdsForRingTables: 2, numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, gt3Capped: 1, maxPowerState: 11, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac161: IMac161(igpu: BroadwellIgpu(boostPState: [24,24,24,24], heuristic: BroadwellHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 15, startingPstateForRingTableOverride: 11, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,19,20,21,23,24,25,26,28,30,31,33], numOfRingTableOverride: 23, ioBusynessSamplingInterval: 1, enableOverride: 1, upStep: 1, ringOverrideTable1: [8,8,8,9,10,11,13,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16], busyUpThresholdPercent: 70, gt2Floor: 12, id: 2, busyDownThresholdPercent: 50, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfThresholdsForRingTables: 2, numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, gt3Capped: 1, maxPowerState: 11, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2853,19 +2847,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2939,12 +2933,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -3028,7 +3022,7 @@ class ViewController: NSViewController {
                         case rcEvalInterval = "RC_Eval_Interval"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac183: IMac183(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac183: IMac183(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3098,19 +3092,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3182,12 +3176,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -3233,7 +3227,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac152: IMac152(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac152: IMac152(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3303,19 +3297,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3389,12 +3383,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -3419,7 +3413,7 @@ class ViewController: NSViewController {
                         case id = "ID"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac132: IMac132(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac132: IMac132(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3489,19 +3483,19 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
                 struct Heuristic: Codable {
                     let ID: Int
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3575,12 +3569,12 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
+                        
+                        
                         case controlID = "control-id"
                     }
                 }
@@ -3639,7 +3633,7 @@ class ViewController: NSViewController {
                         case enableRingTableOverride = "EnableRingTableOverride"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac162: IMac162(igpu: BroadwellIgpu(boostPState: [24,24,24,24], heuristic: BroadwellHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 15, startingPstateForRingTableOverride: 11, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,19,20,21,23,24,25,26,28,30,31,33], numOfRingTableOverride: 23, ioBusynessSamplingInterval: 1, enableOverride: 1, upStep: 1, ringOverrideTable1: [8,8,8,9,10,11,13,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16], busyUpThresholdPercent: 70, gt2Floor: 12, id: 2, busyDownThresholdPercent: 50, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfThresholdsForRingTables: 2, numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, gt3Capped: 1, maxPowerState: 11, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac162: IMac162(igpu: BroadwellIgpu(boostPState: [24,24,24,24], heuristic: BroadwellHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 15, startingPstateForRingTableOverride: 11, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,19,20,21,23,24,25,26,28,30,31,33], numOfRingTableOverride: 23, ioBusynessSamplingInterval: 1, enableOverride: 1, upStep: 1, ringOverrideTable1: [8,8,8,9,10,11,13,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16], busyUpThresholdPercent: 70, gt2Floor: 12, id: 2, busyDownThresholdPercent: 50, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfThresholdsForRingTables: 2, numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, gt3Capped: 1, maxPowerState: 11, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3709,19 +3703,19 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
+                    
+                    
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -3790,19 +3784,19 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
+                    
+                    
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -3871,19 +3865,17 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -3952,19 +3944,17 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -4032,19 +4022,17 @@ class ViewController: NSViewController {
             struct GFX0: Codable {
                 let agdcEnabled: Int
                 let Heuristic: Heuristic
-                let maxPowerState, minPowerState, controlID: Int
+                let controlID: Int
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -4123,12 +4111,10 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
                         case controlID = "control-id"
                     }
                 }
@@ -4169,7 +4155,7 @@ class ViewController: NSViewController {
                     }
                 }
                 
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac101: Wolfdale(igpu: WolfdaleIgpu(boostPState: [0,1,2,3], heuristic: WolfdaleHeuristic(thresholdLow: [0,90,90,90], idleInterval: 100, sensorOption: 1, thresholdHigh: [80,80,80,100], id: 0, targetCount: 5), controlID: 16, boostTime: [3,3,3,3]), gfx0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18), defaultControlID: 18)))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac101: Wolfdale(igpu: WolfdaleIgpu(boostPState: [0,1,2,3], heuristic: WolfdaleHeuristic(thresholdLow: [0,90,90,90], idleInterval: 100, sensorOption: 1, thresholdHigh: [80,80,80,100], id: 0, targetCount: 5), controlID: 16, boostTime: [3,3,3,3]), gfx0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18), defaultControlID: 18)))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -4239,12 +4225,10 @@ class ViewController: NSViewController {
                 struct GFX0: Codable {
                     let agdcEnabled: Int
                     let Heuristic: Heuristic
-                    let maxPowerState, minPowerState, controlID: Int
+                    let controlID: Int
                     enum CodingKeys: String, CodingKey {
                         case agdcEnabled = "AGDCEnabled"
                         case Heuristic
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
                         case controlID = "control-id"
                     }
                 }
@@ -4270,7 +4254,7 @@ class ViewController: NSViewController {
                         case targetCount = "TargetCount"
                     }
                 }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac101: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), maxPowerState: 15, minPowerState: 0, controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac101: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
