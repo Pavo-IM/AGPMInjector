@@ -150,36 +150,36 @@ class ViewController: NSViewController {
     }
     @IBAction func generateButton(_ sender: Any) {
         func saveAlert () {
-            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-            let userDesktopDirectory = paths[0]
+            let fileManager = FileManager.default
+            let home = fileManager.homeDirectoryForCurrentUser
+            let kextPath = "Desktop/AGPMInjector.kext"
+            let kextUrl = home.appendingPathComponent(kextPath)
             let alert = NSAlert()
             alert.messageText = "Injector Kext Generation Complete!"
-            alert.informativeText = "AGPMInjector.kext has been generated and saved to \(userDesktopDirectory)"
+            alert.informativeText = "AGPMInjector.kext has been generated and saved to \(kextUrl.path)"
             alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
         }
         
         func existAlert () {
             let fileManager = FileManager.default
-            let home = FileManager.default.homeDirectoryForCurrentUser
-            let playgroundPath = "Desktop/AGPMInjector.kext"
-            let playgroundUrl = home.appendingPathComponent(playgroundPath)
-            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-            let userDesktopDirectory = paths[0]
+            let home = fileManager.homeDirectoryForCurrentUser
+            let kextPath = "Desktop/AGPMInjector.kext"
+            let kextUrl = home.appendingPathComponent(kextPath)
             let alert = NSAlert()
             alert.alertStyle = .critical
-            alert.addButton(withTitle: "OK")
             alert.addButton(withTitle: "Delete")
             alert.messageText = "File Already Exist!"
-            alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Click the Delete button to delete the existing file!"
+            alert.informativeText = "AGPMInjector.kext already exist at \(kextUrl.path). Click the Delete button to delete the existing file!"
             alert.beginSheetModal(for: self.view.window!, completionHandler: { (returnCode) -> Void in
                 switch returnCode {
-                case NSAlertSecondButtonReturn: do {
-                    try fileManager.removeItem(at: playgroundUrl)
+                case NSAlertFirstButtonReturn: do {
+                    try fileManager.removeItem(at: kextUrl)
                 }
                 catch {
                     print(error.localizedDescription)
                     }
-                default: return
+                default:
+                    return
                 }
             })
         }
