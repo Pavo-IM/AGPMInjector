@@ -155,7 +155,33 @@ class ViewController: NSViewController {
             let alert = NSAlert()
             alert.messageText = "Injector Kext Generation Complete!"
             alert.informativeText = "AGPMInjector.kext has been generated and saved to \(userDesktopDirectory)"
-            alert.runModal()
+            alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+        }
+        
+        func existAlert () {
+            let fileManager = FileManager.default
+            let home = FileManager.default.homeDirectoryForCurrentUser
+            let playgroundPath = "Desktop/AGPMInjector.kext"
+            let playgroundUrl = home.appendingPathComponent(playgroundPath)
+            let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
+            let userDesktopDirectory = paths[0]
+            let alert = NSAlert()
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Delete")
+            alert.messageText = "File Already Exist!"
+            alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Click the Delete button to delete the existing file!"
+            alert.beginSheetModal(for: self.view.window!, completionHandler: { (returnCode) -> Void in
+                switch returnCode {
+                case NSAlertSecondButtonReturn: do {
+                    try fileManager.removeItem(at: playgroundUrl)
+                }
+                catch {
+                    print(error.localizedDescription)
+                    }
+                default: return
+                }
+            })
         }
         
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
@@ -230,13 +256,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -316,13 +336,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -402,13 +416,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -488,13 +496,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -575,13 +577,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -704,13 +700,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -792,13 +782,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -902,13 +886,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -990,13 +968,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1119,13 +1091,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1207,13 +1173,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1336,13 +1296,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1424,13 +1378,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1593,13 +1541,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1681,13 +1623,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1790,13 +1726,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -1878,13 +1808,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2007,13 +1931,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2095,13 +2013,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2264,13 +2176,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2352,13 +2258,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2462,13 +2362,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2550,13 +2444,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2679,13 +2567,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2767,13 +2649,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2911,13 +2787,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -2999,13 +2869,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3168,13 +3032,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3256,13 +3114,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3385,13 +3237,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3473,13 +3319,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3583,13 +3423,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3671,13 +3505,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3815,13 +3643,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3903,13 +3725,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -3990,13 +3806,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -4077,13 +3887,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -4164,13 +3968,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -4250,13 +4048,7 @@ class ViewController: NSViewController {
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
-                let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                let userDesktopDirectory = paths[0]
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "File Already Exist!"
-                alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                alert.runModal()
+                existAlert()
             } else {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -4381,13 +4173,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
@@ -4488,13 +4274,7 @@ class ViewController: NSViewController {
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
-                    let paths = NSSearchPathForDirectoriesInDomains(.desktopDirectory, .userDomainMask, true)
-                    let userDesktopDirectory = paths[0]
-                    let alert = NSAlert()
-                    alert.alertStyle = .critical
-                    alert.messageText = "File Already Exist!"
-                    alert.informativeText = "AGPMInjector.kext already exist at \(userDesktopDirectory). Please delete the existing file and try again!"
-                    alert.runModal()
+                    existAlert()
                 } else {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
