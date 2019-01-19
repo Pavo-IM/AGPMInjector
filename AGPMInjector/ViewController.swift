@@ -10,10 +10,11 @@ import Cocoa
 
 class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
-    let bundleID = "com.apple.driver.AGPMInjector"
+    let bundleID = "com.pavo.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "1.0-AGPMInjector"
+    let bundleShortVersionName = "2.3.2-AGPMInjector"
     let bundleSig = "????"
+    let bundleReq = "Local-Root"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
     // Create Decoder and Encoder objects
@@ -259,7 +260,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -337,7 +338,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -417,7 +418,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -480,15 +481,13 @@ class ViewController: NSViewController {
                 enum CodingKeys: String, CodingKey {
                     case agdcEnabled = "AGDCEnabled"
                     case Heuristic
-                    
-                    
                     case controlID = "control-id"
                 }
             }
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: bundleReq)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -497,7 +496,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -578,7 +577,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -701,7 +700,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -783,7 +782,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -887,7 +886,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -969,7 +968,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1092,7 +1091,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1174,7 +1173,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1297,7 +1296,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1379,7 +1378,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1542,7 +1541,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1624,7 +1623,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1727,7 +1726,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1809,7 +1808,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -1932,7 +1931,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2014,7 +2013,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2177,7 +2176,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2259,7 +2258,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2363,7 +2362,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2445,7 +2444,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2568,7 +2567,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2648,7 +2647,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2786,7 +2785,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -2868,7 +2867,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3031,7 +3030,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3113,7 +3112,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3236,7 +3235,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3318,7 +3317,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3422,7 +3421,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3504,7 +3503,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3642,7 +3641,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -3724,7 +3723,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -3805,7 +3804,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -3884,7 +3883,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -3963,7 +3962,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -4041,7 +4040,7 @@ class ViewController: NSViewController {
                 do {
                     try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                     let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try PropertyListEncoder().encode(plistToEncode)
+                    let data = try plistEncoder.encode(plistToEncode)
                     try data.write(to: InfoPlistfilePath)
                     saveAlert()
                 }
@@ -4164,7 +4163,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
@@ -4263,7 +4262,7 @@ class ViewController: NSViewController {
                     do {
                         try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
                         let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try PropertyListEncoder().encode(plistToEncode)
+                        let data = try plistEncoder.encode(plistToEncode)
                         try data.write(to: InfoPlistfilePath)
                         saveAlert()
                     }
