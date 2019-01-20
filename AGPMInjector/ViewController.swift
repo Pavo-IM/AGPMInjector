@@ -28,6 +28,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var popButton: NSPopUpButton!
     @IBOutlet weak var iGPULabel: NSTextField!
     @IBOutlet weak var yesChecked: NSButton!
+    
     override func viewDidLoad() {
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height); 
         super.viewDidLoad()
@@ -214,6 +215,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func generateButton(_ sender: Any) {
+        
         func saveAlert () {
             let fileManager = FileManager.default
             let home = fileManager.homeDirectoryForCurrentUser
@@ -294,9 +296,9 @@ class ViewController: NSViewController {
                 }
             }
             struct Machines: Codable {
-                var macPro51: MacPro
+                var imacPro11: MacPro
                 enum CodingKeys: String, CodingKey {
-                    case macPro51 = "iMacPro1,1"
+                    case imacPro11 = "iMacPro1,1"
                 }
             }
             struct MacPro: Codable {
@@ -315,7 +317,8 @@ class ViewController: NSViewController {
             struct Heuristic: Codable {
                 let ID: Int
             }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
+
+            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(imacPro11: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: 0), controlID: 18))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
