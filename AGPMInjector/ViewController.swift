@@ -12,7 +12,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.3.3-AGPMInjector"
+    let bundleShortVersionName = "2.3.5-AGPMInjector"
     let bundleSig = "????"
     let bundleReq = "Local-Root"
     // Create Decoder object
@@ -147,16 +147,26 @@ class ViewController: NSViewController {
         
         let versionNumberString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         let buildNumberString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        
         struct Response: Codable {
             let tag_name: String
+            let assets: [Assets]
+        }
+        
+        struct Assets: Codable {
+            let browser_download_url: String
         }
         
         var parsedVersion = ""
-        
+        var parsedArray = [Assets]()
+
         func parse(json: Data) {
             let decoder = JSONDecoder()
             if let latestRelease = try? decoder.decode(Response.self, from: json) {
                 parsedVersion = latestRelease.tag_name
+            }
+            if let downloadURL = try? decoder.decode(Response.self, from: json) {
+                parsedArray = downloadURL.assets
             }
         }
         
@@ -165,6 +175,11 @@ class ViewController: NSViewController {
             if let data = try? Data(contentsOf: url) {
                 parse(json: data)
             }
+        }
+        
+        var test = ""
+        for element in parsedArray {
+            test = element.browser_download_url
         }
         
         let installedVersion = versionNumberString! + "." + buildNumberString!
@@ -201,8 +216,9 @@ class ViewController: NSViewController {
             
             if latestValue > installedValue {
                 let alert = NSAlert()
+                alert.alertStyle = .critical
                 alert.messageText = "Update Available!"
-                alert.informativeText = "Latest version is \(parsedVersion) but you are running \(installedVersion). Download the latest update at https://github.com/Pavo-IM/AGPMInjector/releases"
+                alert.informativeText = "Latest version is \(parsedVersion) but you are running \(installedVersion). Download the latest update at \(test)."
                 alert.runModal()
                 break
             }
