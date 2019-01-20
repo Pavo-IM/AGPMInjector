@@ -144,11 +144,75 @@ class ViewController: NSViewController {
         popButton.selectItem(at: 0)
         yesChecked.state = NSControlStateValueOff
         
+        let versionNumberString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        let buildNumberString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        struct Response: Codable {
+            let tag_name: String
+        }
+        
+        var parsedVersion = ""
+        
+        func parse(json: Data) {
+            let decoder = JSONDecoder()
+            if let latestRelease = try? decoder.decode(Response.self, from: json) {
+                parsedVersion = latestRelease.tag_name
+            }
+        }
+        
+        let urlString = "https://api.github.com/repos/Pavo-IM/AGPMInjector/releases/latest"
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                parse(json: data)
+            }
+        }
+        
+        let installedVersion = versionNumberString! + "." + buildNumberString!
+        let latestVersionComponents = parsedVersion.components(separatedBy: ".")
+        let installedVersionComponents = installedVersion.components(separatedBy: ".")
+        
+        for (n, component) in latestVersionComponents.enumerated() {
+            guard let latestValue = Int(component) else {
+                let alert = NSAlert()
+                alert.alertStyle = .critical
+                alert.messageText = "Unrecognized version"
+                alert.informativeText = "Unrecognized version. Please issue a bug report at https://github.com/Pavo-IM/AGPMInjector/issues!"
+                alert.runModal()
+                break
+            }
+            
+            guard let installedValue = Int(installedVersionComponents[n]) else {
+                let alert = NSAlert()
+                alert.alertStyle = .critical
+                alert.messageText = "Unrecognized version"
+                alert.informativeText = "Unrecognized version. Please issue a bug report at https://github.com/Pavo-IM/AGPMInjector/issues!"
+                alert.runModal()
+                break
+            }
+            
+            if installedValue > latestValue {
+                let alert = NSAlert()
+                alert.alertStyle = .critical
+                alert.messageText = "Unrecognized version"
+                alert.informativeText = "Very interesting... installed version \(installedVersion) is newer than reported latest version \(parsedVersion)!. Please issue a bug report at https://github.com/Pavo-IM/AGPMInjector/issues!"
+                alert.runModal()
+                break
+            }
+            
+            if latestValue > installedValue {
+                let alert = NSAlert()
+                alert.messageText = "Update Available!"
+                alert.informativeText = "Latest version is \(parsedVersion) but you are running \(installedVersion). Download the latest update at https://github.com/Pavo-IM/AGPMInjector/releases"
+                alert.runModal()
+                break
+            }
+        }
     }
+    
     override var representedObject: Any? {
         didSet {
         }
     }
+    
     @IBAction func generateButton(_ sender: Any) {
         func saveAlert () {
             let fileManager = FileManager.default
