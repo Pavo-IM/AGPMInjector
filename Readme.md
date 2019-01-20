@@ -18,3 +18,4 @@ AGPM Injector
 
 #### Credits
 - [toleda](https://github.com/toleda) and others for layout.
+- [vidda#7908](https://discord.gg/fSSmfq) for the help with Update Notification feature.
