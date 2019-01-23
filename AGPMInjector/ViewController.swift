@@ -12,7 +12,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.3.9-AGPMInjector"
+    let bundleShortVersionName = "2.4.0-AGPMInjector"
     let bundleSig = "????"
     let bundleReq = "Local-Root"
     // Create Decoder object
