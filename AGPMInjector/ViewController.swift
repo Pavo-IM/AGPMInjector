@@ -12,7 +12,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.3.7-AGPMInjector"
+    let bundleShortVersionName = "2.3.9-AGPMInjector"
     let bundleSig = "????"
     let bundleReq = "Local-Root"
     // Create Decoder object
@@ -144,86 +144,7 @@ class ViewController: NSViewController {
         popButton.addItems(withTitles: sortedArray)
         popButton.selectItem(at: 0)
         yesChecked.state = NSControlStateValueOff
-        
-//        let versionNumberString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-//        let buildNumberString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-//        
-//        struct Response: Codable {
-//            let tag_name: String
-//            let assets: [Assets]
-//        }
-//        
-//        struct Assets: Codable {
-//            let browser_download_url: String
-//        }
-//        
-//        var parsedVersion = ""
-//        var parsedArray = [Assets]()
-//
-//        func parse(json: Data) {
-//            let decoder = JSONDecoder()
-//            if let latestRelease = try? decoder.decode(Response.self, from: json) {
-//                parsedVersion = latestRelease.tag_name
-//            }
-//            if let downloadURL = try? decoder.decode(Response.self, from: json) {
-//                parsedArray = downloadURL.assets
-//            }
-//        }
-//        
-//        let urlString = "https://api.github.com/repos/Pavo-IM/AGPMInjector/releases/latest"
-//        if let url = URL(string: urlString) {
-//            if let data = try? Data(contentsOf: url) {
-//                parse(json: data)
-//            }
-//        }
-//        
-//        var test = ""
-//        for element in parsedArray {
-//            test = element.browser_download_url
-//        }
-//        
-//        let installedVersion = versionNumberString! + "." + buildNumberString!
-//        let latestVersionComponents = parsedVersion.components(separatedBy: ".")
-//        let installedVersionComponents = installedVersion.components(separatedBy: ".")
-//        
-//        for (n, component) in latestVersionComponents.enumerated() {
-//            guard let latestValue = Int(component) else {
-//                let alert = NSAlert()
-//                alert.alertStyle = .critical
-//                alert.messageText = "Unrecognized version"
-//                alert.informativeText = "Unrecognized version. Please issue a bug report at https://github.com/Pavo-IM/AGPMInjector/issues!"
-//                alert.runModal()
-//                break
-//            }
-//            
-//            guard let installedValue = Int(installedVersionComponents[n]) else {
-//                let alert = NSAlert()
-//                alert.alertStyle = .critical
-//                alert.messageText = "Unrecognized version"
-//                alert.informativeText = "Unrecognized version. Please issue a bug report at https://github.com/Pavo-IM/AGPMInjector/issues!"
-//                alert.runModal()
-//                break
-//            }
-//            
-//            if installedValue > latestValue {
-//                let alert = NSAlert()
-//                alert.alertStyle = .critical
-//                alert.messageText = "Unrecognized version"
-//                alert.informativeText = "Very interesting... installed version \(installedVersion) is newer than reported latest version \(parsedVersion)!. Please issue a bug report at https://github.com/Pavo-IM/AGPMInjector/issues!"
-//                alert.runModal()
-//                break
-//            }
-//            
-//            if latestValue > installedValue {
-//                let alert = NSAlert()
-//                alert.alertStyle = .critical
-//                alert.messageText = "Update Available!"
-//                alert.informativeText = "Latest version is \(parsedVersion) but you are running \(installedVersion). Download the latest update at \(test)."
-//                alert.runModal()
-//                break
-//            }
-//        }
-    }
+}
     
     override var representedObject: Any? {
         didSet {
