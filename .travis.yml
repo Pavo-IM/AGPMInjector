@@ -1,0 +1,4 @@
+language: swift
+osx_image: xcode10.1
+xcode_project: AGPMInjector.xcworkspace
+xcode_scheme: AGPMInjector

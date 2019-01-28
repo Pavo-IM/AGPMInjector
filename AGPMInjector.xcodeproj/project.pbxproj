@@ -14,6 +14,7 @@
 		CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E521D722FE00C0A72D /* Main.storyboard */; };
 		CF8D21F021D7232400C0A72D /* AGPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21EF21D7232400C0A72D /* AGPM.swift */; };
 		CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = CFB08C8121E1BDFE008C5465 /* Readme.md */; };
+		CFCC23EC21FEB72C001DFD70 /* .travis.yml in Resources */ = {isa = PBXBuildFile; fileRef = CFCC23EB21FEB72C001DFD70 /* .travis.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		CF8D21E921D722FE00C0A72D /* AGPMInjector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AGPMInjector.entitlements; sourceTree = "<group>"; };
 		CF8D21EF21D7232400C0A72D /* AGPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGPM.swift; sourceTree = "<group>"; };
 		CFB08C8121E1BDFE008C5465 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		CFCC23EB21FEB72C001DFD70 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = iGPU_FAQs.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,6 +57,7 @@
 		CF8D21D321D722FC00C0A72D = {
 			isa = PBXGroup;
 			children = (
+				CFCC23EB21FEB72C001DFD70 /* .travis.yml */,
 				CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */,
 				CFB08C8121E1BDFE008C5465 /* Readme.md */,
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
@@ -162,6 +165,7 @@
 			files = (
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
 				CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */,
+				CFCC23EC21FEB72C001DFD70 /* .travis.yml in Resources */,
 				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
