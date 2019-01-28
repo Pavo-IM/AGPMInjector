@@ -4,3 +4,4 @@ xcode_workspace: AGPMInjector.xcworkspace
 xcode_scheme: AGPMInjector
 platform: macOS
 os: osx
+script: xcodebuild -workspace AGPMInjector.xcworkspace -scheme AGPMInjector build
