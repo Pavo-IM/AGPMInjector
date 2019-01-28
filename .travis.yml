@@ -3,3 +3,4 @@ osx_image: xcode10.1
 xcode_workspace: AGPMInjector.xcworkspace
 xcode_scheme: AGPMInjector
 platform: macOS
+os: osx
