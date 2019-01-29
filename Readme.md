@@ -1,7 +1,5 @@
 AGPM Injector
 =============
-#### Master branch build status:
-![](https://travis-ci.com/Pavo-IM/AGPMInjector.svg?branch=master)
 ##### This is a AGPM (Apple Graphics Power Management) Injector kext generator.
 
 #### Installation
