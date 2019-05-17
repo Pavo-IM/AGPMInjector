@@ -40,13 +40,13 @@ class ViewController: NSViewController {
         var comboboxArray = [String](plistData.IOKitPersonalities.AGPM.Machines.keys)
         
         func removeItemsFromArray(item: String) {
-            if let item = comboboxArray.index(of: "\(item)") {
+            if let item = comboboxArray.firstIndex(of: "\(item)") {
                 comboboxArray.remove(at: item)
             }
         }
         
         func renameItemInArray(olditem: String, newitem: String) {
-            if let olditem = comboboxArray.index(of: "\(olditem)") {
+            if let olditem = comboboxArray.firstIndex(of: "\(olditem)") {
                 comboboxArray.remove(at: olditem)
                 comboboxArray.insert("\(newitem)", at: olditem)
             }
@@ -151,7 +151,7 @@ class ViewController: NSViewController {
         popButton.removeAllItems()
         popButton.addItems(withTitles: sortedArray)
         popButton.selectItem(at: 0)
-        yesChecked.state = NSControlStateValueOff
+        yesChecked.state = NSControl.StateValue.off
 }
     
     override var representedObject: Any? {
@@ -184,7 +184,7 @@ class ViewController: NSViewController {
             alert.informativeText = "AGPMInjector.kext already exist at \(kextUrl.path). Click the Delete button to delete the existing file!"
             alert.beginSheetModal(for: self.view.window!, completionHandler: { (returnCode) -> Void in
                 switch returnCode {
-                case NSAlertFirstButtonReturn: do {
+                case NSApplication.ModalResponse.alertFirstButtonReturn: do {
                     try fileManager.removeItem(at: kextUrl)
                 }
                 catch {
@@ -519,7 +519,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac14,2" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -598,7 +598,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -724,7 +724,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac13,1" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -803,7 +803,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -910,7 +910,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac14,1" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -989,7 +989,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1115,7 +1115,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac15,1" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1194,7 +1194,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1320,7 +1320,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac18,1" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1399,7 +1399,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1565,7 +1565,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac17,1" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1644,7 +1644,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1750,7 +1750,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac14,3" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1829,7 +1829,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -1955,7 +1955,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac18,2" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2034,7 +2034,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2200,7 +2200,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac13,3" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2279,7 +2279,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2386,7 +2386,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac14,4" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2465,7 +2465,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2591,7 +2591,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac16,1" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2668,7 +2668,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2809,7 +2809,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac18,3" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -2888,7 +2888,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3054,7 +3054,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac15,2" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3133,7 +3133,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3259,7 +3259,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac13,2" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3338,7 +3338,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3445,7 +3445,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac16,2" {
-            if yesChecked.state == NSControlStateValueOff {
+            if yesChecked.state == NSControl.StateValue.off {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3524,7 +3524,7 @@ class ViewController: NSViewController {
                     }
                 }
             } else {
-                yesChecked.state = NSControlStateValueOn
+                yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3665,7 +3665,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac12,2" {
-            yesChecked.state = NSControlStateValueOff
+            yesChecked.state = NSControl.StateValue.off
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3746,7 +3746,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac12,1" {
-            yesChecked.state = NSControlStateValueOff
+            yesChecked.state = NSControl.StateValue.off
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3827,7 +3827,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac11,3" {
-            yesChecked.state = NSControlStateValueOff
+            yesChecked.state = NSControl.StateValue.off
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -3906,7 +3906,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac11,2" {
-            yesChecked.state = NSControlStateValueOff
+            yesChecked.state = NSControl.StateValue.off
             struct PlistSet: Codable {
                 let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                 let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -4063,7 +4063,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac10,1" {
-            if yesChecked.state == NSControlStateValueOn {
+            if yesChecked.state == NSControl.StateValue.on {
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
@@ -4185,7 +4185,7 @@ class ViewController: NSViewController {
                 }
             }
             else {
-                yesChecked.state = NSControlStateValueOff
+                yesChecked.state = NSControl.StateValue.off
                 struct PlistSet: Codable {
                     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
                     let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
