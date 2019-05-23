@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A483870F36031931574707C /* Pods_AGPMInjector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31A38B2AF76C261D64487860 /* Pods_AGPMInjector.framework */; };
+		CF4D43222296184A000E3D1E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4D43212296184A000E3D1E /* Sparkle.framework */; };
+		CF4D43232296184A000E3D1E /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF4D43212296184A000E3D1E /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
@@ -16,10 +17,23 @@
 		CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = CFB08C8121E1BDFE008C5465 /* Readme.md */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		CF4D43242296184A000E3D1E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CF4D43232296184A000E3D1E /* Sparkle.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		31A38B2AF76C261D64487860 /* Pods_AGPMInjector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AGPMInjector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		330A03F8111ECF5DC55BF39F /* Pods-AGPMInjector.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AGPMInjector.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AGPMInjector/Pods-AGPMInjector.debug.xcconfig"; sourceTree = "<group>"; };
-		7AE64B7F1AF1E483F9CA7A1C /* Pods-AGPMInjector.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AGPMInjector.release.xcconfig"; path = "Pods/Target Support Files/Pods-AGPMInjector/Pods-AGPMInjector.release.xcconfig"; sourceTree = "<group>"; };
+		CF4D43212296184A000E3D1E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Carthage/Build/Mac/Sparkle.framework; sourceTree = "<group>"; };
+		CF4D432522961850000E3D1E /* Sparkle.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Sparkle.framework.dSYM; path = Carthage/Build/Mac/Sparkle.framework.dSYM; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8D21E121D722FC00C0A72D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A483870F36031931574707C /* Pods_AGPMInjector.framework in Frameworks */,
+				CF4D43222296184A000E3D1E /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,7 +61,6 @@
 		7E27EF311689832E4A77CCC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				31A38B2AF76C261D64487860 /* Pods_AGPMInjector.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -55,11 +68,12 @@
 		CF8D21D321D722FC00C0A72D = {
 			isa = PBXGroup;
 			children = (
+				CF4D432522961850000E3D1E /* Sparkle.framework.dSYM */,
+				CF4D43212296184A000E3D1E /* Sparkle.framework */,
 				CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */,
 				CFB08C8121E1BDFE008C5465 /* Readme.md */,
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
 				CF8D21DD21D722FC00C0A72D /* Products */,
-				CFAB409AA01D7E29139BF595 /* Pods */,
 				7E27EF311689832E4A77CCC9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -86,15 +100,6 @@
 			path = AGPMInjector;
 			sourceTree = "<group>";
 		};
-		CFAB409AA01D7E29139BF595 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				330A03F8111ECF5DC55BF39F /* Pods-AGPMInjector.debug.xcconfig */,
-				7AE64B7F1AF1E483F9CA7A1C /* Pods-AGPMInjector.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -102,11 +107,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CF8D21EC21D722FE00C0A72D /* Build configuration list for PBXNativeTarget "AGPMInjector" */;
 			buildPhases = (
-				7832FF38671E72BB9D6C0091 /* [CP] Check Pods Manifest.lock */,
 				CF8D21D821D722FC00C0A72D /* Sources */,
 				CF8D21D921D722FC00C0A72D /* Frameworks */,
 				CF8D21DA21D722FC00C0A72D /* Resources */,
-				12E3498163A698901AF74EFD /* [CP] Embed Pods Frameworks */,
+				CF4D43242296184A000E3D1E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,47 +171,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		12E3498163A698901AF74EFD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AGPMInjector/Pods-AGPMInjector-frameworks.sh",
-				"${PODS_ROOT}/Sparkle/Sparkle.framework",
-				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AGPMInjector/Pods-AGPMInjector-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7832FF38671E72BB9D6C0091 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AGPMInjector-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CF8D21D821D722FC00C0A72D /* Sources */ = {
@@ -351,7 +314,6 @@
 		};
 		CF8D21ED21D722FE00C0A72D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 330A03F8111ECF5DC55BF39F /* Pods-AGPMInjector.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -359,6 +321,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -374,7 +340,6 @@
 		};
 		CF8D21EE21D722FE00C0A72D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AE64B7F1AF1E483F9CA7A1C /* Pods-AGPMInjector.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
@@ -382,6 +347,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
