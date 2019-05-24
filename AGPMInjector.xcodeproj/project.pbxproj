@@ -61,6 +61,8 @@
 		7E27EF311689832E4A77CCC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CF4D432522961850000E3D1E /* Sparkle.framework.dSYM */,
+				CF4D43212296184A000E3D1E /* Sparkle.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -68,8 +70,6 @@
 		CF8D21D321D722FC00C0A72D = {
 			isa = PBXGroup;
 			children = (
-				CF4D432522961850000E3D1E /* Sparkle.framework.dSYM */,
-				CF4D43212296184A000E3D1E /* Sparkle.framework */,
 				CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */,
 				CFB08C8121E1BDFE008C5465 /* Readme.md */,
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
