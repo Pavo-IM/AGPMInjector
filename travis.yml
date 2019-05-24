@@ -1,6 +1,0 @@
-os: osx
-language: swift
-osx_image: xcode10.2
-xcode_project: AGPMInjector.xcodeproj
-xcode_scheme: AGPMInjector
-xcode_destination: platform=macOS
