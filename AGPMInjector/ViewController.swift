@@ -145,6 +145,8 @@ class ViewController: NSViewController {
         renameItemInArray(olditem: "Mac-FA842E06C61E91C5", newitem: "iMac15,2")
         renameItemInArray(olditem: "Mac-FC02E91DDD3FA6A4", newitem: "iMac13,2")
         renameItemInArray(olditem: "Mac-FFE5EF870D7BA81A", newitem: "iMac16,2")
+        renameItemInArray(olditem: "Mac-63001698E7A34814", newitem: "iMac19,2")
+        renameItemInArray(olditem: "Mac-AA95B1DDAB278B95", newitem: "iMac19,1")
         
         let sortedArray = comboboxArray.sorted()
         
