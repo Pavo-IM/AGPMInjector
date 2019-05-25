@@ -4,15 +4,15 @@ osx_image: xcode10.2
 if: tag IS blank
 script:
 - set -o pipefail && xcodebuild | xcpretty
-- set -o pipefail && xcodebuild -project OpenCore\ Configurator.xcodeproj -scheme OpenCore\ Configurator -destination platform\=macOS test | xcpretty
+- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector -destination platform\=macOS | xcpretty
 before_deploy:
 - cd build/Release
 - COMMIT="$(git log --format=%h -1)"
 - git tag $COMMIT
-- zip -r -X OpenCore.zip OpenCore\ Configurator.app
+- zip -r -X AGPMInjector.zip AGPMInjector.app
 - cd ..
 - cd ..
-- mv build/Release/OpenCore.zip "$COMMIT.zip"
+- mv build/Release/AGPMInjector.zip "$COMMIT.zip"
 deploy:
   provider: releases
   user: "Pavo-IM"
