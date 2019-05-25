@@ -8,7 +8,6 @@ AGPM Injector  [![Build Status](https://app.bitrise.io/app/6061b488021016ba/stat
 
 #### Features
 - Notifies user if there is an update on Github (App version 2.3.4).
-- Supports High Sierra and Mojave. Please test on older OS versions and give feedback if it doesn't work on a certain OS version.
 - Fixes GPU Power Management settings for *desktop* GPUs on supported SMBIOS (Systems that are in the dropdown menu).
 - Automatically parses /System/Library/Extensions/AppleGraphicsPowerManagement.kext to generate the most up to date injector kext.
 
