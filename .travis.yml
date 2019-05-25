@@ -1,7 +1,3 @@
-os: osx
-language:
-- swift
+language: swift
 osx_image: xcode10.2
-script:
-- set -o pipefail && xcodebuild | xcpretty
-- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector -destination platform\=macOS | xcpretty
+script: xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector
