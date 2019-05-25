@@ -8,6 +8,10 @@ script:
   -destination platform\=macOS | xcpretty
 before_deploy:
 - cd build/Release
+- git config --local user.name "YOUR GIT USER NAME"
+- git config --local user.email "YOUR GIT USER EMAIL"
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+- git tag $TRAVIS_TAG
 - COMMIT="$(git log --format=%h -1)"
 - git tag $COMMIT
 - zip -r -X AGPMInjector.zip AGPMInjector.app
@@ -16,8 +20,11 @@ before_deploy:
 - mv build/Release/AGPMInjector.zip "$COMMIT.zip"
 deploy:
   provider: releases
-  api_key:
-    secure: BttC9PtiJqHA2/uw/T+XiF4kMpzmaofQu1G/m3mtMG+nQ3Mp3a3jXYnJf73cGD4dOxlatndCrIR+QLd0WcVmy3J6Zmp6keyT3YLJmjIimhdbvmYAxIs9ftp8c6B1YAoSwjuOSJUQq5R5IIgzTmrUAJgfw4orhQEik46UIVOfgqUaEfRAX6xTKv/Oh0Jv2EaD16lgGSXUOweqfZAs1BWJSdI9SaVICQA49HQIm5unj3MCP57yAOnxeuRCs/9YG0ofpFYFprnf/AuyUF4M7LoCE09VYkN9+qDG0wOCZK35arUWji8r/ZnB1AG0fCKybLFWxoULE/Agn4CSISzhnND6mxVWbuubeB75iDIqsfPLXYXXLhwK5i1R4c7nU0BGS3jU4t6Ud9yh3Y+CTNKRLQ+u1AT1dcipI9y63vpcMiUdEZdpzD6ksTtxpPybcjueIcUknSJZBwVgTjnxw3fwvEKxMJt5rOPqbX81PC/a2oKnnoeOl8N7JOGfTBxYR3p+U1cBjDIBJ/VjN8owVwJ0cw82T0viJcZHSMdrDuTMWXUXNFHNvwKz/w+GU0oZlY/dgaYsbFPg95LHzmSudGq5xzJFrwIsGotFhzDGysNLd9gTeTfd8yjEkdxvZmdGHmm9x8xbDZBNM4HVHzerRKxZwVK7oX4y8MUq0RwysJlZD5fm4Nc=
+  user: "Pavo-IM"
+  password:
+    secure: sOfjNsqNj4VaNvC1LMKL5w6qDrPGPJOvW49nGefTIm6pjIRGo8uscHU7JWrCuqvYIS4Tx2QpGJlzDOoCW/XB4nhaRLkLr8BOawO9n0Ao3z3CytKtFdRdOiGFm88Rvfn3hSwNyIqJw77tYh2DN5qBhS+847j+dgG9SNHKE5Yi003ARa2of2rCkSzEfa7+CPNsPX2E4dGZiFt+lKCaEOKSomt7/HkNeTwtj8bN1Doi99CTXtCmHSlE53hAXuC+PD3VsyPTwOF3EB41EGZdYmj1334ZdwoHP+7/AiYQEv11NpuwdZqvoeoXpFt23TfvEprwwBDGKxooppf54uYFVADxq3pfkcyNmUKFxtLLZGuHHwDXq4TYiVFW55crpJ2CpJkemomWmgZBrefYm+R0F7vjVKZbUW482WnJ++pXSc969CifL/H1cZ4Uoc79Rx2YtMHLvDJ6J4LTh9fj6LKm6Pk67pFmtVXY4tZ7dz7n5S9Um0e2wbrm5Q1VxhHAP5/6Y/JtqVEUcGPYg5i3C3rJAIgI7Oyik/HmQZS5Pj/0cuNrEFavIJ9VyGjfJ41w8n9Tg4cEIjiO0j/1G8302noULumx3EMvpqCoOW/iz/gFcbcewuht07/Hu8O83sh7+o8BMufev96KxxCwxcBAAkzyYbxLSG+UIKdiz5+nUiTmzY384Vc=
   file: "$COMMIT.zip"
+  skip_cleanup: true
   on:
+    tags: true
     repo: Pavo-IM/AGPMInjector
