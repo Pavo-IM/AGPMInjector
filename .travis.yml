@@ -4,7 +4,8 @@ osx_image: xcode10.2
 if: tag IS blank
 script:
 - set -o pipefail && xcodebuild | xcpretty
-- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector -destination platform\=macOS | xcpretty
+- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector
+  -destination platform\=macOS | xcpretty
 before_deploy:
 - cd build/Release
 - COMMIT="$(git log --format=%h -1)"
@@ -15,9 +16,8 @@ before_deploy:
 - mv build/Release/AGPMInjector.zip "$COMMIT.zip"
 deploy:
   provider: releases
-  user: "Pavo-IM"
-  password:
-    secure: sOfjNsqNj4VaNvC1LMKL5w6qDrPGPJOvW49nGefTIm6pjIRGo8uscHU7JWrCuqvYIS4Tx2QpGJlzDOoCW/XB4nhaRLkLr8BOawO9n0Ao3z3CytKtFdRdOiGFm88Rvfn3hSwNyIqJw77tYh2DN5qBhS+847j+dgG9SNHKE5Yi003ARa2of2rCkSzEfa7+CPNsPX2E4dGZiFt+lKCaEOKSomt7/HkNeTwtj8bN1Doi99CTXtCmHSlE53hAXuC+PD3VsyPTwOF3EB41EGZdYmj1334ZdwoHP+7/AiYQEv11NpuwdZqvoeoXpFt23TfvEprwwBDGKxooppf54uYFVADxq3pfkcyNmUKFxtLLZGuHHwDXq4TYiVFW55crpJ2CpJkemomWmgZBrefYm+R0F7vjVKZbUW482WnJ++pXSc969CifL/H1cZ4Uoc79Rx2YtMHLvDJ6J4LTh9fj6LKm6Pk67pFmtVXY4tZ7dz7n5S9Um0e2wbrm5Q1VxhHAP5/6Y/JtqVEUcGPYg5i3C3rJAIgI7Oyik/HmQZS5Pj/0cuNrEFavIJ9VyGjfJ41w8n9Tg4cEIjiO0j/1G8302noULumx3EMvpqCoOW/iz/gFcbcewuht07/Hu8O83sh7+o8BMufev96KxxCwxcBAAkzyYbxLSG+UIKdiz5+nUiTmzY384Vc=
+  api_key:
+    secure: lHctlnePieMC0HKuu7dk4IPKKZU9XtdrRxmorHshkGT0YR1nAARYf22GJxMSXHAUXBrz6487xOH1D9Z/1XSK0eprRDupbrXgPC7PvPVRPmLb/yFLsdBEIq89IT+P+3ILJ57Im5kLy2e8uGUxMHudC3+nQoq2DB4H0y5ME9t0Kmv+iWr1uGtC2ujz9WEliIUCKkrdWD7pPOmIZXFMTSPy7V5uE/eETkqNF7XeVQWkp0njCqfZpLZTNqoIy/4KcY76NRwCHeLF8t4HHhxe++9oH2GWxX5/tLZu92UH7aZGROIH1EjT6ky12IKgANG8RVgUy3NtQBU/wzaVce6XcVyZPPK2ZCQwXdnJu1GIJ/FQHtr61CZppAs87K+mMIuMwrQ9UX1HxAmLzf1YAuRad5/vv8DmOwmIIUi2/0dZ2ndP+38h1pl5+PCuw+8lRa+e64i8YhX0TRuAq52D6SoqQTtncgvZGvPGAyyasDkD2MSC3IBLMrQs8cjFrfUTFpf6kSfIzPSCeU+ooDsCbtOT66dGkn4+MQWSYFA7QG+VTNBY0zvtj02rCZKnyE1/2qumvoSef5HTRb9S1BeDa/fbMP7vE7opgcMZyiPxcg4wOfxtU+Eqgus9TOh0Or3rRB1Ki1Q/7XMkNSvyiGKg33qilBvT5RHTNXzlOjTQoVOZUlK4qOc=
   file: "$COMMIT.zip"
   skip_cleanup: true
   on:
