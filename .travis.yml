@@ -12,7 +12,7 @@ before_deploy:
 - git config --local user.email "YOUR GIT USER EMAIL"
 - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 - git tag $TRAVIS_TAG
-- COMMIT="$(git log --format=%h -1)"
+- export COMMIT=$TRAVIS_TAG
 - git tag $COMMIT
 - zip -r -X AGPMInjector.zip AGPMInjector.app
 - cd ..
@@ -27,4 +27,3 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    repo: Pavo-IM/AGPMInjector
