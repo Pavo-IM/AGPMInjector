@@ -1,18 +1,16 @@
 language:
 - swift
 osx_image: xcode10.2
-if: tag IS blank
 script:
 - set -o pipefail && xcodebuild | xcpretty
-- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector
-  -destination platform\=macOS | xcpretty
+- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector -destination platform\=macOS | xcpretty
 before_deploy:
-- cd build/Release
-- git config --local user.name "YOUR GIT USER NAME"
-- git config --local user.email "YOUR GIT USER EMAIL"
+- git config --local user.name "Pavo"
+- git config --local user.email "brockbackups@gmail.com"
 - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 - git tag $TRAVIS_TAG
-- export COMMIT=$TRAVIS_TAG
+- cd build/Release
+- COMMIT="$(git log --format=%h -1)"
 - git tag $COMMIT
 - zip -r -X AGPMInjector.zip AGPMInjector.app
 - cd ..
