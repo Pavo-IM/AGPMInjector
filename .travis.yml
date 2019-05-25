@@ -1,3 +1,24 @@
-language: swift
+language:
+- swift
+osx_image: xcode10.2
+if: tag IS blank
 script:
-  - xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector
+- set -o pipefail && xcodebuild | xcpretty
+- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector -destination platform\=macOS test | xcpretty
+before_deploy:
+- cd build/Release
+- COMMIT="$(git log --format=%h -1)"
+- git tag $COMMIT
+- zip -r -X AGPMInjector.zip AGPMInjector.app
+- cd ..
+- cd ..
+- mv build/Release/AGPMInjector.zip "$COMMIT.zip"
+deploy:
+  provider: releases
+  api_key:
+    secure: aDwTmvfPHVjr5yQtxRkL/Cgd6ZT/lzfIvyH5bLAwrtKznzV1oVFjsssySSnTCopcCYl1BbxmzvpGpzaWDMDYtoVwkO/sx2VQ6sWBXs8RNoZScMdQL+0u15cwFrkT/TZBTshCrVazI4Lmsqx9J0UgkAEIa+gEgp5Xm99byqORbovFllb9pQGagnF2s2JQ4W8sEbV/S0+NopvaBjQaJwAyeyYqkfXhxC8yUj1YajdUhhTxXrluOkCLMyjMKAMVKUPScOWFvAks84pONICc9qQlVXFkLLqYcylkZkByCnrmMSJ3NT3EvOqjtH86/pwi+KJdVzX/WS4gXZxF5KbTg5Si+jat2o7Kcft2HUzsWlQ+KzUk/w733qVlTifS5bsQTa6NN1W5s9Q8aeda98g77ZqDEbtiTGLizkK8n/KlcSJ9pKQk3GcLNU7tnUhAxMLSyt+gJ3/G06+dLnrVW+0Z++Q50MFFWMmcI5mZ3BlJpq9RHPDfQJKaE/Rg2fsPr1bCdjsCuRcI5Oawg/NJXVsp7G+W8opy0cYwYblx9z3N+xxp7BA3iZCPXvI60l9l18/92mO72go1WMC6ar0Sj01+3lB/RS0sSlc/EzT5SBrQogpkv+fOtE7CO6SymGfaG4NVv0e2I6dhmdmzmMb7dbl3QuNJpHdHnFzMmDXoKI0GC62sBDY=
+  file: "$COMMIT.zip"
+  skip_cleanup: true
+  on:
+    repo: Pavo-IM/AGPMInjector
+    
