@@ -2,32 +2,6 @@ os: osx
 language:
 - swift
 osx_image: xcode10.2
-if: tag IS blank
 script:
-- export CERTIFICATE_P12=/scripts/certs/cert.p12;
-- echo $CERTIFICATE_OSX_P12 | base64 --decode > $CERTIFICATE_P12;
-- export KEYCHAIN=build.keychain;
-- security create-keychain -p $CERTIFICATE_PASSWORD $KEYCHAIN;
-- security default-keychain -s $KEYCHAIN;
-- security unlock-keychain -p $CERTIFICATE_PASSWORD $KEYCHAIN;
-- security import $CERTIFICATE_P12 -k $KEYCHAIN -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign;
 - set -o pipefail && xcodebuild | xcpretty
-- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector
-  -destination platform\=macOS | xcpretty
-before_deploy:
-- cd build/Release
-- COMMIT="$(git log --format=%h -1)"
-- git tag $COMMIT
-- codesign --deep --force --verbose --sign "<Henry Brock>" AGPMInjector.app
-- zip -r -X AGPMInjector.zip AGPMInjector.app
-- cd ..
-- cd ..
-- mv build/Release/AGPMInjector.zip "$COMMIT.zip"
-deploy:
-  provider: releases
-  api_key:
-    secure: lHctlnePieMC0HKuu7dk4IPKKZU9XtdrRxmorHshkGT0YR1nAARYf22GJxMSXHAUXBrz6487xOH1D9Z/1XSK0eprRDupbrXgPC7PvPVRPmLb/yFLsdBEIq89IT+P+3ILJ57Im5kLy2e8uGUxMHudC3+nQoq2DB4H0y5ME9t0Kmv+iWr1uGtC2ujz9WEliIUCKkrdWD7pPOmIZXFMTSPy7V5uE/eETkqNF7XeVQWkp0njCqfZpLZTNqoIy/4KcY76NRwCHeLF8t4HHhxe++9oH2GWxX5/tLZu92UH7aZGROIH1EjT6ky12IKgANG8RVgUy3NtQBU/wzaVce6XcVyZPPK2ZCQwXdnJu1GIJ/FQHtr61CZppAs87K+mMIuMwrQ9UX1HxAmLzf1YAuRad5/vv8DmOwmIIUi2/0dZ2ndP+38h1pl5+PCuw+8lRa+e64i8YhX0TRuAq52D6SoqQTtncgvZGvPGAyyasDkD2MSC3IBLMrQs8cjFrfUTFpf6kSfIzPSCeU+ooDsCbtOT66dGkn4+MQWSYFA7QG+VTNBY0zvtj02rCZKnyE1/2qumvoSef5HTRb9S1BeDa/fbMP7vE7opgcMZyiPxcg4wOfxtU+Eqgus9TOh0Or3rRB1Ki1Q/7XMkNSvyiGKg33qilBvT5RHTNXzlOjTQoVOZUlK4qOc=
-  file: "$COMMIT.zip"
-  skip_cleanup: true
-  on:
-    repo: Pavo-IM/AGPMInjector
+- set -o pipefail && xcodebuild -project AGPMInjector.xcodeproj -scheme AGPMInjector -destination platform\=macOS | xcpretty
