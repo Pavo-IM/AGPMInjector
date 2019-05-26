@@ -2567,7 +2567,7 @@ class ViewController: NSViewController {
                     let iMac191: IMac191
                     
                     enum CodingKeys: String, CodingKey {
-                        case iMac191 = "iMac191"
+                        case iMac191 = "iMac19,1"
                     }
                 }
                 struct IMac191: Codable {
