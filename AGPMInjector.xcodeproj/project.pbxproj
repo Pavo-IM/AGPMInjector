@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF4D43222296184A000E3D1E /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF4D43212296184A000E3D1E /* Sparkle.framework */; };
-		CF4D43232296184A000E3D1E /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF4D43212296184A000E3D1E /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF70D19C229C27ED00BEB811 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA330B0229C262100C6A7EA /* Sparkle.framework */; };
+		CF70D19D229C27ED00BEB811 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CFA330B0229C262100C6A7EA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF70D19F229C282100BEB811 /* Sparkle.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = CFA330AE229C25D900C6A7EA /* Sparkle.framework.dSYM */; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
 		CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E521D722FE00C0A72D /* Main.storyboard */; };
 		CF8D21F021D7232400C0A72D /* AGPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21EF21D7232400C0A72D /* AGPM.swift */; };
+		CFA330AF229C25D900C6A7EA /* Sparkle.framework.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = CFA330AE229C25D900C6A7EA /* Sparkle.framework.dSYM */; };
 		CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = CFB08C8121E1BDFE008C5465 /* Readme.md */; };
 /* End PBXBuildFile section */
 
@@ -24,16 +26,24 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CF4D43232296184A000E3D1E /* Sparkle.framework in Embed Frameworks */,
+				CF70D19D229C27ED00BEB811 /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF70D19E229C280800BEB811 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				CF70D19F229C282100BEB811 /* Sparkle.framework.dSYM in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CF4D43212296184A000E3D1E /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Carthage/Build/Mac/Sparkle.framework; sourceTree = "<group>"; };
-		CF4D432522961850000E3D1E /* Sparkle.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Sparkle.framework.dSYM; path = Carthage/Build/Mac/Sparkle.framework.dSYM; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8D21E121D722FC00C0A72D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -42,6 +52,8 @@
 		CF8D21E821D722FE00C0A72D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF8D21E921D722FE00C0A72D /* AGPMInjector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AGPMInjector.entitlements; sourceTree = "<group>"; };
 		CF8D21EF21D7232400C0A72D /* AGPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGPM.swift; sourceTree = "<group>"; };
+		CFA330AE229C25D900C6A7EA /* Sparkle.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = Sparkle.framework.dSYM; sourceTree = "<group>"; };
+		CFA330B0229C262100C6A7EA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		CFB08C8121E1BDFE008C5465 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = iGPU_FAQs.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF4D43222296184A000E3D1E /* Sparkle.framework in Frameworks */,
+				CF70D19C229C27ED00BEB811 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,8 +73,8 @@
 		7E27EF311689832E4A77CCC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CF4D432522961850000E3D1E /* Sparkle.framework.dSYM */,
-				CF4D43212296184A000E3D1E /* Sparkle.framework */,
+				CFA330B0229C262100C6A7EA /* Sparkle.framework */,
+				CFA330AE229C25D900C6A7EA /* Sparkle.framework.dSYM */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -111,6 +123,7 @@
 				CF8D21D921D722FC00C0A72D /* Frameworks */,
 				CF8D21DA21D722FC00C0A72D /* Resources */,
 				CF4D43242296184A000E3D1E /* Embed Frameworks */,
+				CF70D19E229C280800BEB811 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -167,6 +180,7 @@
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
 				CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */,
 				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
+				CFA330AF229C25D900C6A7EA /* Sparkle.framework.dSYM in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +338,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -350,6 +365,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
