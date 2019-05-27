@@ -1,6 +1,5 @@
 
 *.entitlements
-*.pbxproj
 *.xcuserstate
 .DS_Store
 .Carthage/Build/
