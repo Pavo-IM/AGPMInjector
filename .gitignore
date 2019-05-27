@@ -4,4 +4,4 @@
 *.xcuserstate
 .DS_Store
 AGPMInjector.xcodeproj/project.pbxproj
-Carthage/Build
+Carthage/Build/
