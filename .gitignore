@@ -2,4 +2,5 @@
 *.entitlements
 *.xcuserstate
 .DS_Store
+.Carthage/
 .Carthage/Build/
