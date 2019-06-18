@@ -335,7 +335,6 @@
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
@@ -362,7 +361,6 @@
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
