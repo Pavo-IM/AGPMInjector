@@ -12,7 +12,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.6.4-AGPMInjector"
+    let bundleShortVersionName = "2.6.5-AGPMInjector"
     let bundleSig = "????"
     let bundleReq = "Local-Root"
     // Create Decoder object
@@ -24,6 +24,8 @@ class ViewController: NSViewController {
     let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
     let setInfoPlistName = "Info.plist"
     let setDocumentDirectory = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+    
+    
     
     @IBOutlet weak var popButton: NSPopUpButton!
     @IBOutlet weak var iGPULabel: NSTextField!
