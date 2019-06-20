@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF130550229C2B160041140E /* Sparkle.framework.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = CF13054F229C2B160041140E /* Sparkle.framework.dSYM */; };
-		CF130552229C2B1B0041140E /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF13054D229C2B070041140E /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CF130554229C2B2C0041140E /* Sparkle.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = CF13054F229C2B160041140E /* Sparkle.framework.dSYM */; };
+		CF02383022BAFFB100343F40 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CF13054D229C2B070041140E /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF02383122BB04AF00343F40 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF13054D229C2B070041140E /* Sparkle.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
@@ -19,24 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CF130553229C2B1B0041140E /* Embed Frameworks */ = {
+		CF02382E22BAFD3C00343F40 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CF130552229C2B1B0041140E /* Sparkle.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CF70D19E229C280800BEB811 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-				CF130554229C2B2C0041140E /* Sparkle.framework.dSYM in CopyFiles */,
+				CF02383022BAFFB100343F40 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF02383122BB04AF00343F40 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,8 +109,7 @@
 				CF8D21D821D722FC00C0A72D /* Sources */,
 				CF8D21D921D722FC00C0A72D /* Frameworks */,
 				CF8D21DA21D722FC00C0A72D /* Resources */,
-				CF70D19E229C280800BEB811 /* CopyFiles */,
-				CF130553229C2B1B0041140E /* Embed Frameworks */,
+				CF02382E22BAFD3C00343F40 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -178,7 +166,6 @@
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
 				CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */,
 				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
-				CF130550229C2B160041140E /* Sparkle.framework.dSYM in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,20 +315,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -354,20 +335,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "3rd Party Mac Developer Application";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;

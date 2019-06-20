@@ -27,7 +27,7 @@
                                         <menuItem title="Check for Updates" id="49e-EN-dr1">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="checkForUpdates:" target="cPt-w4-TSW" id="rtK-O3-WxL"/>
+                                                <action selector="checkForUpdates:" target="L3s-AP-crP" id="Rfo-Fm-AdF"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -683,8 +683,8 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AGPMInjector" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+                <customObject id="L3s-AP-crP" customClass="SUUpdater"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="cPt-w4-TSW" customClass="SUUpdater"/>
             </objects>
             <point key="canvasLocation" x="75" y="19"/>
         </scene>
