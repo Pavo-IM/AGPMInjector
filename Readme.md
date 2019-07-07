@@ -21,3 +21,4 @@ AGPM Injector  [![Build Status](https://app.bitrise.io/app/f8989a730f43aa26/stat
 #### Credits
 - [toleda](https://github.com/toleda) and others for layout.
 - [vidda#7908](https://discord.gg/fSSmfq) for the help with Update Notification feature.
+- [Estel#4658](https://discord.gg/fSSmfq) for the help with Encodable CodingKeys.
