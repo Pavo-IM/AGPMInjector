@@ -13,8 +13,9 @@
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
 		CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E521D722FE00C0A72D /* Main.storyboard */; };
-		CF8D21F021D7232400C0A72D /* AGPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21EF21D7232400C0A72D /* AGPM.swift */; };
+		CF8D21F021D7232400C0A72D /* getPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21EF21D7232400C0A72D /* getPlist.swift */; };
 		CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = CFB08C8121E1BDFE008C5465 /* Readme.md */; };
+		CFB288FB22D2A77600D229E9 /* setPlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB288FA22D2A77600D229E9 /* setPlist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,8 +41,9 @@
 		CF8D21E621D722FE00C0A72D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF8D21E821D722FE00C0A72D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF8D21E921D722FE00C0A72D /* AGPMInjector.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AGPMInjector.entitlements; sourceTree = "<group>"; };
-		CF8D21EF21D7232400C0A72D /* AGPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGPM.swift; sourceTree = "<group>"; };
+		CF8D21EF21D7232400C0A72D /* getPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getPlist.swift; sourceTree = "<group>"; };
 		CFB08C8121E1BDFE008C5465 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		CFB288FA22D2A77600D229E9 /* setPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setPlist.swift; sourceTree = "<group>"; };
 		CFEE247C21EBFBCD005DD627 /* iGPU_FAQs.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = iGPU_FAQs.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,7 +90,8 @@
 		CF8D21DE21D722FC00C0A72D /* AGPMInjector */ = {
 			isa = PBXGroup;
 			children = (
-				CF8D21EF21D7232400C0A72D /* AGPM.swift */,
+				CF8D21EF21D7232400C0A72D /* getPlist.swift */,
+				CFB288FA22D2A77600D229E9 /* setPlist.swift */,
 				CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */,
 				CF8D21E121D722FC00C0A72D /* ViewController.swift */,
 				CF8D21E321D722FE00C0A72D /* Assets.xcassets */,
@@ -127,7 +130,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = Pavo;
 				TargetAttributes = {
 					CF8D21DB21D722FC00C0A72D = {
@@ -177,7 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */,
-				CF8D21F021D7232400C0A72D /* AGPM.swift in Sources */,
+				CFB288FB22D2A77600D229E9 /* setPlist.swift in Sources */,
+				CF8D21F021D7232400C0A72D /* getPlist.swift in Sources */,
 				CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +324,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -340,6 +345,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
