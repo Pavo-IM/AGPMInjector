@@ -12,7 +12,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.6.9-AGPMInjector"
+    let bundleShortVersionName = "2.7.0-AGPMInjector"
     let bundleSig = "????"
     let bundleReq = "Local-Root"
     // Create Decoder object
@@ -208,70 +208,8 @@ class ViewController: NSViewController {
         let filePath =  setDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
         // Create a object to represent the plist data to get encoded
         if popButton.titleOfSelectedItem == "iMacPro1,1" {
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var imacPro11: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case imacPro11 = "iMacPro1,1"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
 
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(imacPro11: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMacPro11, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -291,69 +229,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "MacPro5,1" {
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var macPro51: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case macPro51 = "MacPro5,1"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .macPro51, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -373,69 +249,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "MacPro4,1" {
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var macPro51: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case macPro51 = "MacPro4,1"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .macPro41, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -455,69 +269,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "MacPro6,1" {
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var macPro51: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case macPro51 = "MacPro6,1"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: bundleReq)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .macPro61, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -538,69 +290,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac14,2" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac14,2"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac142, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -747,69 +437,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac13,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac13,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac131, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -937,69 +565,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac14,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac14,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac141, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1146,69 +712,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac15,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac15,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac151, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1355,69 +859,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac18,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac18,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac181, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1604,69 +1046,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac17,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac17,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac171, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -1793,69 +1173,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac14,3" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac14,3"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac143, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2002,69 +1320,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac18,2" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac18,2"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac182, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2251,69 +1507,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac19,2" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac19,2"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac192, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2500,69 +1694,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac19,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac19,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac191, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2749,69 +1881,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac13,3" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac13,3"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac133, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -2939,69 +2009,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac14,4" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac14,4"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac144, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3148,69 +2156,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac16,1" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac16,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac161, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3372,69 +2318,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac18,3" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac18,3"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac183, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3621,69 +2505,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac15,2" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac15,2"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac152, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -3830,69 +2652,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac13,2" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac13,2"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac132, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -4020,69 +2780,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac16,2" {
             if yesChecked.state == NSControl.StateValue.off {
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    var macPro51: MacPro
-                    enum CodingKeys: String, CodingKey {
-                        case macPro51 = "iMac16,2"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                struct GFX0: Codable {
-                    let agdcEnabled: Int
-                    let Heuristic: Heuristic
-                    let controlID: Int
-                    let maxPowerState: Int
-                    let minPowerState: Int
-                    enum CodingKeys: String, CodingKey {
-                        case agdcEnabled = "AGDCEnabled"
-                        case Heuristic
-                        case controlID = "control-id"
-                        case maxPowerState = "max-power-state"
-                        case minPowerState = "min-power-state"
-                    }
-                }
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac162, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
@@ -4244,69 +2942,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac12,2" {
             yesChecked.state = NSControl.StateValue.off
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var macPro51: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case macPro51 = "iMac12,2"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac122, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -4410,69 +3046,7 @@ class ViewController: NSViewController {
         
         if popButton.titleOfSelectedItem == "iMac11,3" {
             yesChecked.state = NSControl.StateValue.off
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var macPro51: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case macPro51 = "iMac11,3"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac113, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -4575,69 +3149,7 @@ class ViewController: NSViewController {
         }
         
         if popButton.titleOfSelectedItem == "iMac11,1" {
-            struct PlistSet: Codable {
-                let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                let IOKitPersonalities: IOKitPersonalities
-                let osBundleRequired: String
-                enum CodingKeys: String, CodingKey {
-                    case buildMachineOSBuild = "BuildMachineOSBuild"
-                    case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                    case cfBundleGetInfoString = "CFBundleGetInfoString"
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                    case cfBundleName = "CFBundleName"
-                    case cfBundlePackageType = "CFBundlePackageType"
-                    case cfBundleShortVersionString = "CFBundleShortVersionString"
-                    case cfBundleSignature = "CFBundleSignature"
-                    case cfBundleVersion = "CFBundleVersion"
-                    case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                    case IOKitPersonalities
-                    case osBundleRequired = "OSBundleRequired"
-                }
-            }
-            struct IOKitPersonalities: Codable {
-                let AGPM: AGPM
-            }
-            struct AGPM: Codable {
-                let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                let Machines: Machines
-                enum CodingKeys: String, CodingKey {
-                    case cfBundleIdentifier = "CFBundleIdentifier"
-                    case ioClass = "IOClass"
-                    case ioNameMatch = "IONameMatch"
-                    case ioProviderClass = "IOProviderClass"
-                    case Machines
-                }
-            }
-            struct Machines: Codable {
-                var macPro51: MacPro
-                enum CodingKeys: String, CodingKey {
-                    case macPro51 = "iMac11,1"
-                }
-            }
-            struct MacPro: Codable {
-                let GFX0: GFX0
-            }
-            struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-            struct Heuristic: Codable {
-                let ID: Int
-            }
-            let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+            let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac111, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.path) {
@@ -4784,90 +3296,7 @@ class ViewController: NSViewController {
             }
             else {
                 yesChecked.state = NSControl.StateValue.off
-                struct PlistSet: Codable {
-                    let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
-                    let cfBundleInfoDictionaryVersion, cfBundleName, cfBundlePackageType, cfBundleShortVersionString: String
-                    let cfBundleSignature, cfBundleVersion, nsHumanReadableCopyright: String
-                    let IOKitPersonalities: IOKitPersonalities
-                    let osBundleRequired: String
-                    enum CodingKeys: String, CodingKey {
-                        case buildMachineOSBuild = "BuildMachineOSBuild"
-                        case cfBundleDevelopmentRegion = "CFBundleDevelopmentRegion"
-                        case cfBundleGetInfoString = "CFBundleGetInfoString"
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case cfBundleInfoDictionaryVersion = "CFBundleInfoDictionaryVersion"
-                        case cfBundleName = "CFBundleName"
-                        case cfBundlePackageType = "CFBundlePackageType"
-                        case cfBundleShortVersionString = "CFBundleShortVersionString"
-                        case cfBundleSignature = "CFBundleSignature"
-                        case cfBundleVersion = "CFBundleVersion"
-                        case nsHumanReadableCopyright = "NSHumanReadableCopyright"
-                        case IOKitPersonalities
-                        case osBundleRequired = "OSBundleRequired"
-                    }
-                }
-                struct IOKitPersonalities: Codable {
-                    let AGPM: AGPM
-                }
-                struct AGPM: Codable {
-                    let cfBundleIdentifier, ioClass, ioNameMatch, ioProviderClass: String
-                    let Machines: Machines
-                    enum CodingKeys: String, CodingKey {
-                        case cfBundleIdentifier = "CFBundleIdentifier"
-                        case ioClass = "IOClass"
-                        case ioNameMatch = "IONameMatch"
-                        case ioProviderClass = "IOProviderClass"
-                        case Machines
-                    }
-                }
-                struct Machines: Codable {
-                    let iMac101: MacPro
-                    
-                    enum CodingKeys: String, CodingKey {
-                        case iMac101 = "iMac10,1"
-                    }
-                }
-                struct MacPro: Codable {
-                    let GFX0: GFX0
-                }
-                
-                struct GFX0: Codable {
-                let agdcEnabled: Int
-                let Heuristic: Heuristic
-                let controlID: Int
-                let maxPowerState: Int
-                let minPowerState: Int
-                enum CodingKeys: String, CodingKey {
-                    case agdcEnabled = "AGDCEnabled"
-                    case Heuristic
-                    case controlID = "control-id"
-                    case maxPowerState = "max-power-state"
-                    case minPowerState = "min-power-state"
-                }
-            }
-                
-                struct Heuristic: Codable {
-                    let ID: Int
-                }
-                
-                struct WolfdaleHeuristic: Codable {
-                    let thresholdLow: [Int]
-                    let idleInterval: Int
-                    let sensorOption: Int?
-                    let thresholdHigh: [Int]
-                    let id: Int
-                    let targetCount: Int?
-                    
-                    enum CodingKeys: String, CodingKey {
-                        case thresholdLow = "Threshold_Low"
-                        case idleInterval = "IdleInterval"
-                        case sensorOption = "SensorOption"
-                        case thresholdHigh = "Threshold_High"
-                        case id = "ID"
-                        case targetCount = "TargetCount"
-                    }
-                }
-                let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac101: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac101, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
                 let fileManager = FileManager.default
                 if fileManager.fileExists(atPath: filePath.path) {
