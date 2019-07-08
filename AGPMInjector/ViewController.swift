@@ -17,9 +17,6 @@ class ViewController: NSViewController {
     let bundleReq = "Local-Root"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
-    // Create Decoder and Encoder objects
-    let plistEncoder = PropertyListEncoder()
-    
     // Write the AGPMInjector.kext/Contents directory to the users Desktop and copying AGPMInjector.plist into that directory as Info.plist
     let setAGPMInjectorDirectory = "AGPMInjector.kext/Contents"
     let setInfoPlistName = "Info.plist"
@@ -35,7 +32,6 @@ class ViewController: NSViewController {
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height); 
         super.viewDidLoad()
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
-        plistEncoder.outputFormat = .xml
         // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
         let data = try! Data(contentsOf: getAGPMFilePathURL)
         let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
@@ -163,150 +159,99 @@ class ViewController: NSViewController {
         }
     }
     
+    func saveAlert () {
+        let fileManager = FileManager.default
+        let home = fileManager.homeDirectoryForCurrentUser
+        let kextPath = "Downloads/AGPMInjector.kext"
+        let kextUrl = home.appendingPathComponent(kextPath)
+        let alert = NSAlert()
+        alert.messageText = "Injector Kext Generation Complete!"
+        alert.informativeText = "AGPMInjector.kext has been generated and saved to \(kextUrl.path)"
+        alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
+    }
+    
+    func existAlert () {
+        let fileManager = FileManager.default
+        let home = fileManager.homeDirectoryForCurrentUser
+        let kextPath = "Downloads/AGPMInjector.kext"
+        let kextUrl = home.appendingPathComponent(kextPath)
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.addButton(withTitle: "Delete")
+        alert.messageText = "File Already Exist!"
+        alert.informativeText = "AGPMInjector.kext already exist at \(kextUrl.path). Click the Delete button to delete the existing file!"
+        alert.beginSheetModal(for: self.view.window!, completionHandler: { (returnCode) -> Void in
+            switch returnCode {
+            case NSApplication.ModalResponse.alertFirstButtonReturn: do {
+                try fileManager.removeItem(at: kextUrl)
+            }
+            catch {
+                print(error.localizedDescription)
+                }
+            default:
+                return
+            }
+        })
+    }
+    
+    func savePlist<EncodableType: Encodable>(encodable: EncodableType) {
+        let plistEncoder = PropertyListEncoder()
+        plistEncoder.outputFormat = .xml
+        let filePath =  setDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
+        let fileManager = FileManager.default
+        if fileManager.fileExists(atPath: filePath.path) {
+            existAlert()
+        } else {
+            do {
+                try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
+                let data = try plistEncoder.encode(encodable)
+                try data.write(to: InfoPlistfilePath)
+                saveAlert()
+            }
+            catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     @IBAction func generateButton(_ sender: Any) {
         
-        func saveAlert () {
-            let fileManager = FileManager.default
-            let home = fileManager.homeDirectoryForCurrentUser
-            let kextPath = "Downloads/AGPMInjector.kext"
-            let kextUrl = home.appendingPathComponent(kextPath)
-            let alert = NSAlert()
-            alert.messageText = "Injector Kext Generation Complete!"
-            alert.informativeText = "AGPMInjector.kext has been generated and saved to \(kextUrl.path)"
-            alert.beginSheetModal(for: self.view.window!, completionHandler: nil)
-        }
-        
-        func existAlert () {
-            let fileManager = FileManager.default
-            let home = fileManager.homeDirectoryForCurrentUser
-            let kextPath = "Downloads/AGPMInjector.kext"
-            let kextUrl = home.appendingPathComponent(kextPath)
-            let alert = NSAlert()
-            alert.alertStyle = .critical
-            alert.addButton(withTitle: "Delete")
-            alert.messageText = "File Already Exist!"
-            alert.informativeText = "AGPMInjector.kext already exist at \(kextUrl.path). Click the Delete button to delete the existing file!"
-            alert.beginSheetModal(for: self.view.window!, completionHandler: { (returnCode) -> Void in
-                switch returnCode {
-                case NSApplication.ModalResponse.alertFirstButtonReturn: do {
-                    try fileManager.removeItem(at: kextUrl)
-                }
-                catch {
-                    print(error.localizedDescription)
-                    }
-                default:
-                    return
-                }
-            })
-        }
-        
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
-        plistEncoder.outputFormat = .xml
         // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
         let data = try! Data(contentsOf: getAGPMFilePathURL)
         let plistData = try! plistDecoder.decode(PlistGet.self, from: data)
-        let filePath =  setDocumentDirectory.appendingPathComponent("\(setAGPMInjectorDirectory)")
         // Create a object to represent the plist data to get encoded
         if popButton.titleOfSelectedItem == "iMacPro1,1" {
 
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMacPro11, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "MacPro5,1" {
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .macPro51, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "MacPro4,1" {
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .macPro41, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "MacPro6,1" {
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .macPro61, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "iMac14,2" {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac142, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -417,21 +362,7 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac142: IMac142(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -439,21 +370,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac131, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -545,21 +462,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac131: IMac131(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -567,21 +470,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac141, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -692,21 +581,7 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac141: IMac141(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -714,21 +589,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac151, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -839,21 +700,7 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac151: IMac151(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -861,21 +708,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac181, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1026,21 +859,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac181: IMac181(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -1048,21 +867,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac171, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1153,21 +958,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac171: IMac171(igpu: SkylakeIgpu(heuristic: SkylakeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -1175,21 +966,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac143, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1300,21 +1077,7 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac143: IMac143(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -1322,21 +1085,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac182, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1487,21 +1236,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac182: IMac182(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -1509,21 +1244,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac192, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1674,21 +1395,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac192: IMac192(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -1696,21 +1403,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac191, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1861,21 +1554,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac191: IMac191(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -1883,21 +1562,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac133, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -1989,21 +1654,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac133: IMac133(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2011,21 +1662,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac144, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -2136,21 +1773,7 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac144: IMac144(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2158,21 +1781,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac161, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -2298,21 +1907,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac161: IMac161(igpu: BroadwellIgpu(boostPState: [24,24,24,24], heuristic: BroadwellHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 15, startingPstateForRingTableOverride: 11, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,19,20,21,23,24,25,26,28,30,31,33], numOfRingTableOverride: 23, ioBusynessSamplingInterval: 1, enableOverride: 1, upStep: 1, ringOverrideTable1: [8,8,8,9,10,11,13,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16], busyUpThresholdPercent: 70, gt2Floor: 12, id: 2, busyDownThresholdPercent: 50, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfThresholdsForRingTables: 2, numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, gt3Capped: 1, maxPowerState: 11, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2320,21 +1915,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac183, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -2485,21 +2066,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac183: IMac183(igpu: kabylakeIgpu(boostPState: [24,24,24,24], heuristic: kabylakeHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 17, numOfRingTableOverride: 23, cpgControl: CPGControl(mediaHysteresis: 32, wakeLimit: 80, renderHysteresis: 200), ringOverrideTable2: [9,11,12,14,15,17,18,20,21,23,24,26,27,29,30,32,33,35,36,38,39,41,42], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, enableOverride: 1, ringOverrideTable1: [9,11,12,14,15,17,18,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19,19], upStep: 1, busyUpThresholdPercent: 70, gt2Floor: 14, rCxControl: RCxControl(rc6WakeLimit: 40, rc6Threshold: 520, rpIdleHysteresis: 25, rcEvalInterval: 40000), numOfThresholdsForRingTables: 2, busyDownThresholdPercent: 50, id: 2, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2507,21 +2074,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac152, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -2632,21 +2185,7 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac152: IMac152(igpu: HaswellIgpu(heuristic: HaswellIGPUHeuristic(enableRingTableOverride: 1, thresholdsForRingOverrideTable0: [0,10], ringOverrideTable1: [16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16], numOfRingTables: 3, id: 2, thresholdsForRingOverrideTable1: [5,15], enableOverride: 0, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], startingPstateForRingTableOverride: 11, ioBusynessSamplingInterval: 1, thresholdsForRingOverrideTable2: [10,100], numOfRingTableOverride: 23, numOfThresholdsForRingTables: 2, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,1920,21,23,24,25,26,28,29,30,31,33]), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2654,21 +2193,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac132, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -2760,21 +2285,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac132: IMac132(igpu: IvyBridgeIgpu(heuristic: IvyBridgeIGPUHeuristic(enableOverride: 0, id: 2), controlID: 16), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2782,21 +2293,7 @@ class ViewController: NSViewController {
             if yesChecked.state == NSControl.StateValue.off {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac162, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             } else {
                 yesChecked.state = NSControl.StateValue.on
                 struct PlistSet: Codable {
@@ -2922,21 +2419,7 @@ class ViewController: NSViewController {
                 }
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac162: IMac162(igpu: BroadwellIgpu(boostPState: [24,24,24,24], heuristic: BroadwellHeuristic(thresholdsForRingOverrideTable2: [10,100], thresholdsForRingOverrideTable1: [5,15], thresholdsForRingOverrideTable0: [0,10], evaluateUpInterval: 31250, downStep: 1, gt3Floor: 15, startingPstateForRingTableOverride: 11, ringOverrideTable2: [8,8,8,9,10,11,13,14,15,16,18,19,20,21,23,24,25,26,28,30,31,33], numOfRingTableOverride: 23, ioBusynessSamplingInterval: 1, enableOverride: 1, upStep: 1, ringOverrideTable1: [8,8,8,9,10,11,13,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16], busyUpThresholdPercent: 70, gt2Floor: 12, id: 2, busyDownThresholdPercent: 50, ringOverrideTable0: [8,8,8,8,8,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], numOfThresholdsForRingTables: 2, numOfRingTables: 3, sampleInterval: 1000, evaluateDownInterval: 31250, enableRingTableOverride: 1), sliceControl: 1, gt3Capped: 1, maxPowerState: 11, controlID: 16, boostTime: [1,1,1,15]), GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
         
@@ -2944,21 +2427,7 @@ class ViewController: NSViewController {
             yesChecked.state = NSControl.StateValue.off
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac122, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "iMac12,1" {
@@ -3027,42 +2496,14 @@ class ViewController: NSViewController {
             }
             let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "iMac11,3" {
             yesChecked.state = NSControl.StateValue.off
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac113, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "iMac11,2" {
@@ -3131,41 +2572,13 @@ class ViewController: NSViewController {
             }
             let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(macPro51: MacPro(GFX0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "iMac11,1" {
             let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac111, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
             
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: filePath.path) {
-                existAlert()
-            } else {
-                do {
-                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                    let data = try plistEncoder.encode(plistToEncode)
-                    try data.write(to: InfoPlistfilePath)
-                    saveAlert()
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
-            }
+            savePlist(encodable: plistToEncode)
         }
         
         if popButton.titleOfSelectedItem == "iMac10,1" {
@@ -3278,41 +2691,13 @@ class ViewController: NSViewController {
                 
                 let plistToEncode = PlistSet(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, IOKitPersonalities: IOKitPersonalities(AGPM: AGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, Machines: Machines(iMac101: Wolfdale(igpu: WolfdaleIgpu(boostPState: [0,1,2,3], heuristic: WolfdaleHeuristic(thresholdLow: [0,90,90,90], idleInterval: 100, sensorOption: 1, thresholdHigh: [80,80,80,100], id: 0, targetCount: 5), controlID: 16, boostTime: [3,3,3,3]), gfx0: GFX0(agdcEnabled: 1, Heuristic: Heuristic(ID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0), defaultControlID: 17)))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
             else {
                 yesChecked.state = NSControl.StateValue.off
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: bundleID, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: bundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: bundleShortVersionName, cfBundleSignature: bundleSig, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(type: .iMac101, gfx: gfx(agdcEnabled: 1, setHeuristic: setHeuristic(setID: -1), controlID: 17, maxPowerState: 15, minPowerState: 0))))), osBundleRequired: plistData.osBundleRequired)
                 
-                let fileManager = FileManager.default
-                if fileManager.fileExists(atPath: filePath.path) {
-                    existAlert()
-                } else {
-                    do {
-                        try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                        let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
-                        let data = try plistEncoder.encode(plistToEncode)
-                        try data.write(to: InfoPlistfilePath)
-                        saveAlert()
-                    }
-                    catch {
-                        print(error.localizedDescription)
-                    }
-                }
+                savePlist(encodable: plistToEncode)
             }
         }
     }
