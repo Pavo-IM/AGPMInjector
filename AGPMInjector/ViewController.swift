@@ -11,7 +11,7 @@ import Cocoa
 class ViewController: NSViewController {
     
     @objc func popupSelectionChanged(_ sender: NSPopUpButton) {
-        let igpuCapableChoices = ["iMac10,1", "iMac11,1", "iMac11,2", "iMac12,1", "iMac12,2", "iMac13,1", "iMac13,2", "iMac13,3", "iMac14,1", "iMac14,2", "iMac14,3", "iMac14,4", "iMac15,1", "iMac15,2", "iMac16,1", "iMac16,2", "iMac17,1", "iMac18,1", "iMac18,2", "iMac18,3", "iMac19,2", "iMac19,2"]
+        let igpuCapableChoices = ["iMac10,1", "iMac11,1", "iMac11,2", "iMac12,1", "iMac12,2", "iMac13,1", "iMac13,2", "iMac13,3", "iMac14,1", "iMac14,2", "iMac14,3", "iMac14,4", "iMac15,1", "iMac15,2", "iMac16,1", "iMac16,2", "iMac17,1", "iMac18,1", "iMac18,2", "iMac18,3", "iMac19,1", "iMac19,2"]
         if let itemTitle = sender.titleOfSelectedItem {
             if igpuCapableChoices.contains(itemTitle) {
                 iGPULabel.isHidden = false
@@ -27,7 +27,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.7.2-AGPMInjector"
+    let bundleShortVersionName = "2.7.3-AGPMInjector"
     let bundleSig = "????"
     let bundleReq = "Local-Root"
     // Create Decoder object
