@@ -9,6 +9,21 @@
 import Cocoa
 
 class ViewController: NSViewController {
+    
+    @objc func popupSelectionChanged(_ sender: NSPopUpButton) {
+        let igpuCapableChoices = ["iMac10,1", "iMac11,1", "iMac11,2", "iMac12,1", "iMac12,2", "iMac13,1", "iMac13,2", "iMac13,3", "iMac14,1", "iMac14,2", "iMac14,3", "iMac14,4", "iMac15,1", "iMac15,2", "iMac16,1", "iMac16,2", "iMac17,1", "iMac18,1", "iMac18,2", "iMac18,3", "iMac19,2", "iMac19,2"]
+        if let itemTitle = sender.titleOfSelectedItem {
+            if igpuCapableChoices.contains(itemTitle) {
+                iGPULabel.isHidden = false
+                yesChecked.isHidden = false
+            }
+            else {
+                iGPULabel.isHidden = true
+                yesChecked.isHidden = true
+            }
+        }
+    }
+    
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
@@ -29,7 +44,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var yesChecked: NSButton!
     
     override func viewDidLoad() {
-        self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height); 
+        iGPULabel.isHidden = true
+        yesChecked.isHidden = true
+        self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height)
         super.viewDidLoad()
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
         // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
@@ -152,11 +169,7 @@ class ViewController: NSViewController {
         popButton.addItems(withTitles: sortedArray)
         popButton.selectItem(at: 0)
         yesChecked.state = NSControl.StateValue.off
-}
-    
-    override var representedObject: Any? {
-        didSet {
-        }
+        popButton.action = #selector(popupSelectionChanged)
     }
     
     func saveAlert () {
@@ -216,7 +229,6 @@ class ViewController: NSViewController {
     }
     
     @IBAction func generateButton(_ sender: Any) {
-        
         let getAGPMFilePathURL = URL.init(fileURLWithPath: getAGPMFilePath)
         // Decoder the AppleGraphicsPowerManagement.kext Info.plist and get some information to save as variable
         let data = try! Data(contentsOf: getAGPMFilePathURL)
