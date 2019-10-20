@@ -94,6 +94,7 @@ class ViewController: NSViewController {
         addItemsToAmdArray(item: "ProDuo")
         addItemsToAmdArray(item: "W7100")
         addItemsToAmdArray(item: "W9100")
+        addItemsToAmdArray(item: "RX5700XT")
         
         // Add Nvidia GPUs
         addItemsToNvidiaArray(item: "GTX650")
@@ -304,6 +305,19 @@ class ViewController: NSViewController {
         let setID = -1
         if AMDCheck.state == NSControl.StateValue.on {
             NvidiaMenu.state = NSControl.StateValue.off
+            if AMDMenu.titleOfSelectedItem == "RX5700XT" {
+                let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: plistData.cfBundleIdentifier, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: plistData.cfBundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: plistData.cfBundleShortVersionString, cfBundleSignature: plistData.cfBundleSignature, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(machinetype: setMachine.MachineType(rawValue: machineSelected.titleOfSelectedItem!)!, setGPUs: setGpu(gpu: .RX5700XT, agdcEnabled: AgdcEnabled, setHeuristic: setHeuristic(setID: setID), controlID: controlID, maxPowerState: maxPState, minPowerState: miniPState))))), osBundleRequired: plistData.osBundleRequired)
+                do {
+                    try FileManager.default.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                    let InfoPlistfilePath =  filePath.appendingPathComponent("\(setInfoPlistName)")
+                    let data = try plistEncoder.encode(plistToEncode)
+                    try data.write(to: InfoPlistfilePath)
+                    saveAlert()
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
             if AMDMenu.titleOfSelectedItem == "RadeonVII" {
                 let plistToEncode = setPlist(buildMachineOSBuild: plistData.buildMachineOSBuild, cfBundleDevelopmentRegion: plistData.cfBundleDevelopmentRegion, cfBundleGetInfoString: plistData.cfBundleGetInfoString, cfBundleIdentifier: plistData.cfBundleIdentifier, cfBundleInfoDictionaryVersion: plistData.cfBundleInfoDictionaryVersion, cfBundleName: plistData.cfBundleName, cfBundlePackageType: plistData.cfBundlePackageType, cfBundleShortVersionString: plistData.cfBundleShortVersionString, cfBundleSignature: plistData.cfBundleSignature, cfBundleVersion: plistData.cfBundleVersion, nsHumanReadableCopyright: plistData.nsHumanReadableCopyright, setIOKitPersonalities: setIOKitPersonalities(setAGPM: setAGPM(cfBundleIdentifier: plistData.IOKitPersonalities.AGPM.cfBundleIdentifier, ioClass: plistData.IOKitPersonalities.AGPM.ioClass, ioNameMatch: plistData.IOKitPersonalities.AGPM.ioNameMatch, ioProviderClass: plistData.IOKitPersonalities.AGPM.ioProviderClass, setMachines: setMachines(machine: setMachine(machinetype: setMachine.MachineType(rawValue: machineSelected.titleOfSelectedItem!)!, setGPUs: setGpu(gpu: .RadeonVII, agdcEnabled: AgdcEnabled, setHeuristic: setHeuristic(setID: setID), controlID: controlID, maxPowerState: maxPState, minPowerState: miniPState))))), osBundleRequired: plistData.osBundleRequired)
                 do {
