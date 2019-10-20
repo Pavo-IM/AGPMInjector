@@ -44,6 +44,7 @@
 		CF8D21EF21D7232400C0A72D /* getPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getPlist.swift; sourceTree = "<group>"; };
 		CFB08C8121E1BDFE008C5465 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		CFB288FA22D2A77600D229E9 /* setPlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setPlist.swift; sourceTree = "<group>"; };
+		CFB5B3CE235C271A00F02E8F /* AGPMInjector copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AGPMInjector copy-Info.plist"; path = "/Volumes/NvME/Github_Repos/AGPMInjector/AGPMInjector copy-Info.plist"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +75,7 @@
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
 				CF8D21DD21D722FC00C0A72D /* Products */,
 				7E27EF311689832E4A77CCC9 /* Frameworks */,
+				CFB5B3CE235C271A00F02E8F /* AGPMInjector copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -322,7 +324,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AGPMInjector/AGPMInjector.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -344,7 +346,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AGPMInjector/AGPMInjector.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
