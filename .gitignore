@@ -1,5 +1,3 @@
-
-*.entitlements
 *.xcuserstate
 .DS_Store
 .Carthage/
