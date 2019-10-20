@@ -55,17 +55,18 @@ struct setAGPM: Encodable {
 struct setMachines: Encodable {
     let machine: setMachine
     func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: setMachine.MachineType.self)
-        try container.encode(machine, forKey: machine.type)
+        var machinecontainer = encoder.container(keyedBy: setMachine.MachineType.self)
+        try machinecontainer.encode(machine, forKey: machine.machinetype)
     }
 }
 
 struct setMachine: Encodable {
-    let type: MachineType
-    let gfx: gfx
+    let machinetype: MachineType
+    let setGPUs: setGpu
     
-    enum CodingKeys: String, CodingKey {
-        case gfx = "GFX0"
+    func encode(to encoder: Encoder) throws {
+        var gpucontainer = encoder.container(keyedBy: setGpu.Gputype.self)
+        try gpucontainer.encode(setGPUs, forKey: setGPUs.gpu)
     }
     
     enum MachineType: String, CodingKey, Codable {
@@ -99,12 +100,69 @@ struct setMachine: Encodable {
      }
 }
 
-struct gfx: Encodable {
+struct setGpu: Encodable {
+    let gpu: Gputype
     let agdcEnabled: Int
     let setHeuristic: setHeuristic
     let controlID: Int
     let maxPowerState: Int
     let minPowerState: Int
+
+    enum Gputype: String, CodingKey, Codable {
+        case RadeonVII = "Vendor1002Device66af"
+        case R9270 = "Vendor1002Device6811"
+        case R9270X = "Vendor1002Device6810"
+        case R9280 = "Vendor1002Device679a"
+        case R9280X = "Vendor1002Device6798"
+        case R9295X2 = "Vendor1002Device67b9"
+        case R9380 = "Vendor1002Device6939"
+        case R9380X = "Vendor1002Device6938"
+        case R9290390 = "Vendor1002Device67b1"
+        case R9290X390X = "Vendor1002Device67b0"
+        case R9Fury = "Vendor1002Device7300"
+        case RX460 = "Vendor1002Device67ef"
+        case RX550 = "Vendor1002Device699f"
+        case RX560 = "Vendor1002Device67ff"
+        case RX470480570580590 = "Vendor1002Device67df"
+        case Vega5664 = "Vendor1002Device687f"
+        case VegaFrontier = "Vendor1002Device6863"
+        case ProDuo = "Vendor1002Device67c4"
+        case W7100 = "Vendor1002Device692b"
+        case W9100 = "Vendor1002Device67a0"
+        case GTX650 = "Vendor10deDevice8428"
+        case GTX650Ti = "Vendor10deDevice11c6"
+        case GTX650TIBoost = "Vendor10deDevice11c2"
+        case GTX760 = "Vendor10deDevice1187"
+        case GTX760Ti = "Vendor10deDevice1189"
+        case GTX770 = "Vendor10deDevice1184"
+        case GTX780 = "Vendor10deDevice1004"
+        case GTX780Ti = "Vendor10deDevice100a"
+        case GTX950 = "Vendor10deDevice1402"
+        case GTX960 = "Vendor10deDevice1401"
+        case GTX970 = "Vendor10deDevice13c2"
+        case GTX980 = "Vendor10deDevice13c0"
+        case GTX980Ti = "Vendor10deDevice17c8"
+        case GTX1050 = "Vendor10deDevice1c81"
+        case GTX1050Ti = "Vendor10deDevice1c82"
+        case GTX1060 = "Vendor10deDevice1c02"
+        case GTX1070 = "Vendor10deDevice1b81"
+        case GTX1070Ti = "Vendor10deDevice1b82"
+        case GTX1080 = "Vendor10deDevice1b80"
+        case GTX1080Ti = "Vendor10deDevice1b06"
+        case GTX2070 = "Vendor10deDevice1f02"
+        case GTXTitan = "Vendor10deDevice1005"
+        case RTX2060 = "Vendor10deDevice1f08"
+        case RTX2060Super = "Vendor10deDevice1f06"
+        case RTX2070 = "Vendor10deDevice1f07"
+        case RTX2070Super = "Vendor10deDevice1e84"
+        case RTX2080 = "Vendor10deDevice1e87"
+        case RTX2080Super = "Vendor10deDevice1e81"
+        case RTX2080Ti = "Vendor10deDevice1e07"
+        case RTXTitan = "Vendor10deDevice1e02"
+        case TitanV = "Vendor10deDevice1d81"
+        case TitanX = "Vendor10deDevice1b00"
+        case TitanXP = "Vendor10deDevice1b02"
+    }
     
     enum CodingKeys: String, CodingKey {
         case agdcEnabled = "AGDCEnabled"

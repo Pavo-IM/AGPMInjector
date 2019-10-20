@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -717,8 +717,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="311"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="K75-gj-yNU">
-                                <rect key="frame" x="180" y="203" width="120" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K75-gj-yNU">
+                                <rect key="frame" x="180" y="128" width="120" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="***Instructions***" id="shE-O9-jn2">
                                     <font key="font" metaFont="systemBold"/>
@@ -726,46 +726,8 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="dWK-1X-jJK">
-                                <rect key="frame" x="5" y="10" width="470" height="141"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="maC-fy-hxb">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">o Select the SMBIOS you are using and click Generate button, a AGPMInjector.kext will be generated with the correct settings in order to load AGPM for your GPU.  o Your GPU device in IOReg must be labeled as GFX0 in order for this injector kext to work properly. This can be done by either using Lilu + WhateverGreen, SSDT/DSDT injection or Device Properties in Clover config. o X86PlatformPlugin must be loaded in order for this injector kext to hook into AGPMController device.</string>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" id="3qv-af-TXY">
-                                <rect key="frame" x="192" y="233" width="96" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Generate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3B8-dn-ocH">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="generateButton:" target="XfG-lQ-9wD" id="dj3-lG-nFw"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" id="FRP-b5-Lma">
-                                <rect key="frame" x="355" y="250" width="44" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Yes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OAF-C7-dEZ">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="CgF-28-oYz">
-                                <rect key="frame" x="355" y="273" width="107" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Is iGPU Enabled?" id="51H-fO-x4D">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <popUpButton verticalHuggingPriority="750" id="bEH-oe-swK">
-                                <rect key="frame" x="168" y="268" width="145" height="25"/>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEH-oe-swK">
+                                <rect key="frame" x="18" y="243" width="145" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cBc-8F-1df" id="v33-Z2-19j">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -779,12 +741,108 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3qv-af-TXY">
+                                <rect key="frame" x="192" y="146" width="96" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Generate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3B8-dn-ocH">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="generateButton:" target="XfG-lQ-9wD" id="dj3-lG-nFw"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UjB-Yf-iff">
+                                <rect key="frame" x="18" y="275" width="54" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="SMBIOS" id="6qH-ld-nJB">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvk-cI-sNI">
+                                <rect key="frame" x="430" y="275" width="32" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="GPU" id="Eyl-Ra-gEg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uG-hc-ubn">
+                                <rect key="frame" x="318" y="243" width="145" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qV9-YC-UND" id="NxG-zw-ZBK">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" id="6CR-Ye-fUa">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="qV9-YC-UND"/>
+                                            <menuItem title="Item 2" id="VOj-ox-GDX"/>
+                                            <menuItem title="Item 3" id="3Hu-EW-AgH"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mvU-Rs-wrN">
+                                <rect key="frame" x="318" y="178" width="145" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2o1-BA-Rkr" id="YE2-re-BLP">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <menu key="menu" id="4HE-so-qdj">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="2o1-BA-Rkr"/>
+                                            <menuItem title="Item 2" id="ghu-28-PqQ"/>
+                                            <menuItem title="Item 3" id="DPP-wg-cjf"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwX-w5-8ph">
+                                <rect key="frame" x="257" y="250" width="57" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="AMD" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cg0-mP-Oxj">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="AMDChecked:" target="XfG-lQ-9wD" id="nf7-uw-Tlo"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PWP-1s-b9f">
+                                <rect key="frame" x="254" y="183" width="60" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Nvidia" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BUO-IH-rQf">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="NvidiaChecked:" target="XfG-lQ-9wD" id="SyH-rg-dbs"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dWK-1X-jJK">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="107"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="maC-fy-hxb">
+                                    <font key="font" metaFont="system"/>
+                                    <string key="title">o Select the SMBIOS you are currently using.
+o Check the box for the GPU Manufacture you currently have installed.
+o Select the GPU Model that you currently have installed.
+o Click the Generate button to generate the AGPMInjector.kext. This kext will be saved in the User's Downloads directory.</string>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="iGPULabel" destination="CgF-28-oYz" id="Wps-rE-i8O"/>
-                        <outlet property="popButton" destination="bEH-oe-swK" id="60h-t4-J7p"/>
-                        <outlet property="yesChecked" destination="FRP-b5-Lma" id="jnh-ZI-3zB"/>
+                        <outlet property="AMDCheck" destination="dwX-w5-8ph" id="IbA-0k-5wV"/>
+                        <outlet property="AMDMenu" destination="8uG-hc-ubn" id="FGM-zV-IEU"/>
+                        <outlet property="NvidiaCheck" destination="PWP-1s-b9f" id="Cy3-6F-W3e"/>
+                        <outlet property="NvidiaMenu" destination="mvU-Rs-wrN" id="Uqn-4Z-9Ib"/>
+                        <outlet property="machineSelected" destination="bEH-oe-swK" id="Ypc-xD-qQC"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
