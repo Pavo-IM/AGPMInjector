@@ -4,9 +4,9 @@ AGPM Injector  [![Build Status](https://app.bitrise.io/app/f8989a730f43aa26/stat
 
 #### Installation
 - Select the SMBIOS you are currently using.
-- Check the box for the GPU Manufacture you currently have installed.
-- Select the GPU Model that you currently have installed.
-- Click the Generate button to generate the AGPMInjector.kext. This kext will be saved in the User's Downloads directory.
+- Check the box for the dGPU Manufacture you currently have installed.
+- Select the dGPU Model from the dropdown menu.
+- Click the Generate button to generate the AGPMInjector.kext. This kext will be saved in the your *Downloads* directory.
 
 #### Features
 - Notifies user when there is an update on Github (as of App version 2.3.4).
