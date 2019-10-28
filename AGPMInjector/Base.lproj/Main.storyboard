@@ -714,21 +714,19 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="AGPMInjector" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="311"/>
+                        <rect key="frame" x="0.0" y="0.0" width="653" height="311"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K75-gj-yNU">
-                                <rect key="frame" x="180" y="128" width="120" height="17"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K75-gj-yNU">
+                                <rect key="frame" x="267" y="115" width="120" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="***Instructions***" id="shE-O9-jn2">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEH-oe-swK">
-                                <rect key="frame" x="18" y="243" width="145" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bEH-oe-swK">
+                                <rect key="frame" x="18" y="231" width="77" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cBc-8F-1df" id="v33-Z2-19j">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -741,9 +739,8 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3qv-af-TXY">
-                                <rect key="frame" x="192" y="146" width="96" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3qv-af-TXY">
+                                <rect key="frame" x="279" y="144" width="96" height="32"/>
                                 <buttonCell key="cell" type="push" title="Generate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3B8-dn-ocH">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -752,27 +749,16 @@
                                     <action selector="generateButton:" target="XfG-lQ-9wD" id="dj3-lG-nFw"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UjB-Yf-iff">
-                                <rect key="frame" x="18" y="275" width="54" height="16"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="SMBIOS" id="6qH-ld-nJB">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UjB-Yf-iff">
+                                <rect key="frame" x="18" y="275" width="96" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Select SMBIOS" id="6qH-ld-nJB">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wvk-cI-sNI">
-                                <rect key="frame" x="430" y="275" width="32" height="16"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="GPU" id="Eyl-Ra-gEg">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uG-hc-ubn">
-                                <rect key="frame" x="318" y="243" width="145" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8uG-hc-ubn">
+                                <rect key="frame" x="559" y="231" width="77" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qV9-YC-UND" id="NxG-zw-ZBK">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -785,9 +771,8 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mvU-Rs-wrN">
-                                <rect key="frame" x="318" y="178" width="145" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mvU-Rs-wrN">
+                                <rect key="frame" x="559" y="190" width="77" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2o1-BA-Rkr" id="YE2-re-BLP">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -800,9 +785,8 @@
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwX-w5-8ph">
-                                <rect key="frame" x="257" y="250" width="57" height="14"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dwX-w5-8ph">
+                                <rect key="frame" x="501" y="236" width="52" height="18"/>
                                 <buttonCell key="cell" type="check" title="AMD" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cg0-mP-Oxj">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -811,9 +795,8 @@
                                     <action selector="AMDChecked:" target="XfG-lQ-9wD" id="nf7-uw-Tlo"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PWP-1s-b9f">
-                                <rect key="frame" x="254" y="183" width="60" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PWP-1s-b9f">
+                                <rect key="frame" x="493" y="195" width="60" height="18"/>
                                 <buttonCell key="cell" type="check" title="Nvidia" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BUO-IH-rQf">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -822,20 +805,50 @@
                                     <action selector="NvidiaChecked:" target="XfG-lQ-9wD" id="SyH-rg-dbs"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dWK-1X-jJK">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="107"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dWK-1X-jJK">
+                                <rect key="frame" x="0.0" y="0.0" width="653" height="85"/>
                                 <textFieldCell key="cell" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="maC-fy-hxb">
                                     <font key="font" metaFont="system"/>
                                     <string key="title">o Select the SMBIOS you are currently using.
-o Check the box for the GPU Manufacture you currently have installed.
-o Select the GPU Model that you currently have installed.
-o Click the Generate button to generate the AGPMInjector.kext. This kext will be saved in the User's Downloads directory.</string>
+o Check the box for the dGPU Manufacture you currently have installed.
+o Select the dGPU Model from the dropdown menu.
+o Click the Generate button to generate the AGPMInjector.kext. This kext will be saved in the your "Downloads" directory.</string>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wvk-cI-sNI">
+                                <rect key="frame" x="554" y="275" width="81" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Select dGPU" id="Eyl-Ra-gEg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="wvk-cI-sNI" secondAttribute="trailing" constant="20" id="4vB-o0-pSR"/>
+                            <constraint firstItem="K75-gj-yNU" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="7Cz-G9-fSC"/>
+                            <constraint firstItem="K75-gj-yNU" firstAttribute="top" secondItem="3qv-af-TXY" secondAttribute="bottom" constant="20" id="7fb-kL-dgh"/>
+                            <constraint firstItem="mvU-Rs-wrN" firstAttribute="leading" secondItem="PWP-1s-b9f" secondAttribute="trailing" constant="10" id="7qT-X3-5MT"/>
+                            <constraint firstItem="dWK-1X-jJK" firstAttribute="top" secondItem="K75-gj-yNU" secondAttribute="bottom" constant="30" id="B0C-4i-ha6"/>
+                            <constraint firstItem="dwX-w5-8ph" firstAttribute="centerY" secondItem="8uG-hc-ubn" secondAttribute="centerY" id="DKa-V3-5QK"/>
+                            <constraint firstItem="bEH-oe-swK" firstAttribute="top" secondItem="UjB-Yf-iff" secondAttribute="bottom" constant="20" id="DX2-ao-azZ"/>
+                            <constraint firstItem="PWP-1s-b9f" firstAttribute="centerY" secondItem="mvU-Rs-wrN" secondAttribute="centerY" id="EIR-cC-peh"/>
+                            <constraint firstItem="UjB-Yf-iff" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="Gqf-2W-1EU"/>
+                            <constraint firstItem="8uG-hc-ubn" firstAttribute="leading" secondItem="dwX-w5-8ph" secondAttribute="trailing" constant="10" id="HuO-o3-zCy"/>
+                            <constraint firstItem="bEH-oe-swK" firstAttribute="leading" secondItem="UjB-Yf-iff" secondAttribute="leading" id="Jh4-um-6HC"/>
+                            <constraint firstItem="dWK-1X-jJK" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="MUD-Q4-g9v"/>
+                            <constraint firstAttribute="bottom" secondItem="dWK-1X-jJK" secondAttribute="bottom" id="N7R-ix-t6c"/>
+                            <constraint firstItem="3qv-af-TXY" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="acZ-Mu-PQR"/>
+                            <constraint firstItem="mvU-Rs-wrN" firstAttribute="trailing" secondItem="wvk-cI-sNI" secondAttribute="trailing" id="c4w-3C-7gt"/>
+                            <constraint firstItem="mvU-Rs-wrN" firstAttribute="top" secondItem="8uG-hc-ubn" secondAttribute="bottom" constant="20" id="hRP-S8-K2b"/>
+                            <constraint firstAttribute="trailing" secondItem="dWK-1X-jJK" secondAttribute="trailing" id="lXH-jj-Ywh"/>
+                            <constraint firstItem="8uG-hc-ubn" firstAttribute="top" secondItem="wvk-cI-sNI" secondAttribute="bottom" constant="20" id="mZu-hz-S80"/>
+                            <constraint firstItem="8uG-hc-ubn" firstAttribute="trailing" secondItem="wvk-cI-sNI" secondAttribute="trailing" id="r0p-k2-iH9"/>
+                            <constraint firstItem="wvk-cI-sNI" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="tIB-en-QVs"/>
+                            <constraint firstItem="UjB-Yf-iff" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="zjF-iH-QYB"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="AMDCheck" destination="dwX-w5-8ph" id="IbA-0k-5wV"/>
@@ -848,7 +861,7 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="vSa-OP-nTH"/>
             </objects>
-            <point key="canvasLocation" x="75" y="808.5"/>
+            <point key="canvasLocation" x="76" y="708"/>
         </scene>
     </scenes>
 </document>
