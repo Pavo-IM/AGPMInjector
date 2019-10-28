@@ -1,13 +1,4 @@
-//
-//  setPlist.swift
-//  AGPMInjector
-//
-//  Created by Henry Brock on 7/7/19.
-//  Copyright © 2019 Pavo. All rights reserved.
-//
-
 import Foundation
-
 
 struct setPlist: Encodable {
     let buildMachineOSBuild, cfBundleDevelopmentRegion, cfBundleGetInfoString, cfBundleIdentifier: String
