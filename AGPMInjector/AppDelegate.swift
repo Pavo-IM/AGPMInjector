@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  AGPMInjector
-//
-//  Created by Henry Brock on 12/28/18.
-//  Copyright © 2018 Pavo. All rights reserved.
-//
-
 import Cocoa
 
 @NSApplicationMain
