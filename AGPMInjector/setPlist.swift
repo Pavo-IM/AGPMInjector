@@ -65,6 +65,7 @@ struct setMachine: Encodable {
         case macPro51 = "MacPro5,1"
         case macPro41 = "MacPro4,1"
         case macPro61 = "MacPro6,1"
+        case macPro71 = "MacPro7,1"
         case iMac101 = "iMac10,1"
         case iMac111 = "iMac11,1"
         case iMac112 = "iMac11,2"
