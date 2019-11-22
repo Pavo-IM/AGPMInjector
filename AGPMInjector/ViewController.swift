@@ -5,7 +5,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.8.0-AGPMInjector"
+    let bundleShortVersionName = "2.8.1-AGPMInjector"
     let bundleSig = "????"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
@@ -166,6 +166,8 @@ class ViewController: NSViewController {
         removeItemsFromArray(item: "Mac-EE2EBD4B90B839A8")
         removeItemsFromArray(item: "Mac-F305150B0C7DEEEF")
         removeItemsFromArray(item: "Mac-F65AE981FFA204ED")
+        removeItemsFromArray(item: "Mac-E1008331FDC96864")
+        removeItemsFromArray(item: "Mac-564FBA6031E5946A")
         removeItemsFromArray(item: "MacBook5,1")
         removeItemsFromArray(item: "MacBook5,2")
         removeItemsFromArray(item: "MacBook6,1")
