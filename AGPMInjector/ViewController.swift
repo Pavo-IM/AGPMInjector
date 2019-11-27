@@ -5,7 +5,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.8.1-AGPMInjector"
+    let bundleShortVersionName = "2.8.2-AGPMInjector"
     let bundleSig = "????"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
@@ -49,6 +49,7 @@ class ViewController: NSViewController {
     ]
     
     var NvidiaDictionary = [
+        "GT 710": "Vendor10deDevice128b",
         "GTX 650": "Vendor10deDevice8428",
         "GTX 650 Ti": "Vendor10deDevice11c6",
         "GTX 650 TI Boost": "Vendor10deDevice11c2",
