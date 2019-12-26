@@ -5,7 +5,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.8.4-AGPMInjector"
+    let bundleShortVersionName = "2.8.6-AGPMInjector"
     let bundleSig = "????"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
@@ -71,16 +71,7 @@ class ViewController: NSViewController {
         "GTX 1070 Ti": "Vendor10deDevice1b82",
         "GTX 1080": "Vendor10deDevice1b80",
         "GTX 1080 Ti": "Vendor10deDevice1b06",
-        "GTX 2070": "Vendor10deDevice1f02",
         "GTX Titan": "Vendor10deDevice1005",
-        "RTX 2060": "Vendor10deDevice1f08",
-        "RTX 2060 Super": "Vendor10deDevice1f06",
-        "RTX 2070": "Vendor10deDevice1f07",
-        "RTX 2070 Super": "Vendor10deDevice1e84",
-        "RTX 2080": "Vendor10deDevice1e87",
-        "RTX 2080 Super": "Vendor10deDevice1e81",
-        "RTX 2080 Ti": "Vendor10deDevice1e07",
-        "RTX Titan": "Vendor10deDevice1e02",
         "Titan V": "Vendor10deDevice1d81",
         "Titan X": "Vendor10deDevice1b00",
         "Titan XP": "Vendor10deDevice1b02"
