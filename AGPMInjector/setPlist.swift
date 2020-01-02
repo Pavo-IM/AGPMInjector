@@ -148,6 +148,7 @@ struct setGpu: Encodable {
         case TitanV = "Vendor10deDevice1d81"
         case TitanX = "Vendor10deDevice1b00"
         case TitanXP = "Vendor10deDevice1b02"
+        case GTXTitanBlack = "Vendor10deDevice100c"
     }
     
     enum CodingKeys: String, CodingKey {

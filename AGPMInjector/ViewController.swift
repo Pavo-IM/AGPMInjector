@@ -5,7 +5,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "2.8.8-AGPMInjector"
+    let bundleShortVersionName = "2.8.9-AGPMInjector"
     let bundleSig = "????"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
@@ -74,7 +74,8 @@ class ViewController: NSViewController {
         "GTX Titan": "Vendor10deDevice1005",
         "Titan V": "Vendor10deDevice1d81",
         "Titan X": "Vendor10deDevice1b00",
-        "Titan XP": "Vendor10deDevice1b02"
+        "Titan XP": "Vendor10deDevice1b02",
+        "GTX Titan Black": "Vendor10deDevice100c"
     ]
     
     @IBOutlet weak var machineSelected: NSPopUpButton!
