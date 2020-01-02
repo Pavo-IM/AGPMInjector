@@ -145,6 +145,7 @@ struct setGpu: Encodable {
         case GTX1080 = "Vendor10deDevice1b80"
         case GTX1080Ti = "Vendor10deDevice1b06"
         case GTXTitan = "Vendor10deDevice1005"
+        case GTXTitanBlack = "Vendor10deDevice100c"
         case TitanV = "Vendor10deDevice1d81"
         case TitanX = "Vendor10deDevice1b00"
         case TitanXP = "Vendor10deDevice1b02"
