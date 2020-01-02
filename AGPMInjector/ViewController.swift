@@ -72,6 +72,7 @@ class ViewController: NSViewController {
         "GTX 1080": "Vendor10deDevice1b80",
         "GTX 1080 Ti": "Vendor10deDevice1b06",
         "GTX Titan": "Vendor10deDevice1005",
+        "GTX Titan Black": "Vendor10deDevice100c",
         "Titan V": "Vendor10deDevice1d81",
         "Titan X": "Vendor10deDevice1b00",
         "Titan XP": "Vendor10deDevice1b02"
