@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9352E14123CFB6780087ACA3 /* imac.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13823CFB6770087ACA3 /* imac.png */; };
-		9352E14423CFB6780087ACA3 /* macpro61.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13B23CFB6780087ACA3 /* macpro61.png */; };
-		9352E14523CFB6780087ACA3 /* macpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13C23CFB6780087ACA3 /* macpro.png */; };
-		9352E14623CFB6780087ACA3 /* newnew.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13D23CFB6780087ACA3 /* newnew.png */; };
-		9352E14823CFB6780087ACA3 /* macpro71.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13F23CFB6780087ACA3 /* macpro71.png */; };
-		9352E14923CFB6780087ACA3 /* imacpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E14023CFB6780087ACA3 /* imacpro.png */; };
+		9326784523CFCB5600BD4A4E /* macpro71.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784023CFCB5500BD4A4E /* macpro71.png */; };
+		9326784623CFCB5600BD4A4E /* macpro61.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784123CFCB5600BD4A4E /* macpro61.png */; };
+		9326784723CFCB5600BD4A4E /* imacpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784223CFCB5600BD4A4E /* imacpro.png */; };
+		9326784823CFCB5600BD4A4E /* imac.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784323CFCB5600BD4A4E /* imac.png */; };
+		9326784923CFCB5600BD4A4E /* macpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784423CFCB5600BD4A4E /* macpro.png */; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
@@ -40,12 +39,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9352E13823CFB6770087ACA3 /* imac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = imac.png; path = ../../../../Desktop/imac.png; sourceTree = "<group>"; };
-		9352E13B23CFB6780087ACA3 /* macpro61.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macpro61.png; path = ../../../../Desktop/macpro61.png; sourceTree = "<group>"; };
-		9352E13C23CFB6780087ACA3 /* macpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macpro.png; path = ../../../../Desktop/macpro.png; sourceTree = "<group>"; };
-		9352E13D23CFB6780087ACA3 /* newnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newnew.png; path = ../../../../Desktop/newnew.png; sourceTree = "<group>"; };
-		9352E13F23CFB6780087ACA3 /* macpro71.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macpro71.png; path = ../../../../Desktop/macpro71.png; sourceTree = "<group>"; };
-		9352E14023CFB6780087ACA3 /* imacpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = imacpro.png; path = ../../../../Desktop/imacpro.png; sourceTree = "<group>"; };
+		9326784023CFCB5500BD4A4E /* macpro71.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro71.png; sourceTree = "<group>"; };
+		9326784123CFCB5600BD4A4E /* macpro61.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro61.png; sourceTree = "<group>"; };
+		9326784223CFCB5600BD4A4E /* imacpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imacpro.png; sourceTree = "<group>"; };
+		9326784323CFCB5600BD4A4E /* imac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imac.png; sourceTree = "<group>"; };
+		9326784423CFCB5600BD4A4E /* macpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro.png; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8D21E121D722FC00C0A72D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -84,12 +82,11 @@
 		9352E13523CFB5DF0087ACA3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				9352E13823CFB6770087ACA3 /* imac.png */,
-				9352E14023CFB6780087ACA3 /* imacpro.png */,
-				9352E13C23CFB6780087ACA3 /* macpro.png */,
-				9352E13B23CFB6780087ACA3 /* macpro61.png */,
-				9352E13F23CFB6780087ACA3 /* macpro71.png */,
-				9352E13D23CFB6780087ACA3 /* newnew.png */,
+				9326784323CFCB5600BD4A4E /* imac.png */,
+				9326784223CFCB5600BD4A4E /* imacpro.png */,
+				9326784423CFCB5600BD4A4E /* macpro.png */,
+				9326784123CFCB5600BD4A4E /* macpro61.png */,
+				9326784023CFCB5500BD4A4E /* macpro71.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -193,15 +190,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9352E14423CFB6780087ACA3 /* macpro61.png in Resources */,
-				9352E14523CFB6780087ACA3 /* macpro.png in Resources */,
+				9326784623CFCB5600BD4A4E /* macpro61.png in Resources */,
+				9326784923CFCB5600BD4A4E /* macpro.png in Resources */,
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
-				9352E14123CFB6780087ACA3 /* imac.png in Resources */,
+				9326784723CFCB5600BD4A4E /* imacpro.png in Resources */,
 				CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */,
-				9352E14623CFB6780087ACA3 /* newnew.png in Resources */,
-				9352E14923CFB6780087ACA3 /* imacpro.png in Resources */,
+				9326784523CFCB5600BD4A4E /* macpro71.png in Resources */,
+				9326784823CFCB5600BD4A4E /* imac.png in Resources */,
 				CFE1F35A23B51A7000B747E1 /* Sparkle.framework.dSYM in Resources */,
-				9352E14823CFB6780087ACA3 /* macpro71.png in Resources */,
 				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
