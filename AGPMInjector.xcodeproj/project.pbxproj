@@ -8,12 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9352E14123CFB6780087ACA3 /* imac.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13823CFB6770087ACA3 /* imac.png */; };
-		9352E14223CFB6780087ACA3 /* macminiold.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13923CFB6770087ACA3 /* macminiold.png */; };
-		9352E14323CFB6780087ACA3 /* macmininew.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13A23CFB6770087ACA3 /* macmininew.png */; };
 		9352E14423CFB6780087ACA3 /* macpro61.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13B23CFB6780087ACA3 /* macpro61.png */; };
 		9352E14523CFB6780087ACA3 /* macpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13C23CFB6780087ACA3 /* macpro.png */; };
 		9352E14623CFB6780087ACA3 /* newnew.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13D23CFB6780087ACA3 /* newnew.png */; };
-		9352E14723CFB6780087ACA3 /* macbookpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13E23CFB6780087ACA3 /* macbookpro.png */; };
 		9352E14823CFB6780087ACA3 /* macpro71.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E13F23CFB6780087ACA3 /* macpro71.png */; };
 		9352E14923CFB6780087ACA3 /* imacpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9352E14023CFB6780087ACA3 /* imacpro.png */; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
@@ -44,12 +41,9 @@
 
 /* Begin PBXFileReference section */
 		9352E13823CFB6770087ACA3 /* imac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = imac.png; path = ../../../../Desktop/imac.png; sourceTree = "<group>"; };
-		9352E13923CFB6770087ACA3 /* macminiold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macminiold.png; path = ../../../../Desktop/macminiold.png; sourceTree = "<group>"; };
-		9352E13A23CFB6770087ACA3 /* macmininew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macmininew.png; path = ../../../../Desktop/macmininew.png; sourceTree = "<group>"; };
 		9352E13B23CFB6780087ACA3 /* macpro61.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macpro61.png; path = ../../../../Desktop/macpro61.png; sourceTree = "<group>"; };
 		9352E13C23CFB6780087ACA3 /* macpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macpro.png; path = ../../../../Desktop/macpro.png; sourceTree = "<group>"; };
 		9352E13D23CFB6780087ACA3 /* newnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newnew.png; path = ../../../../Desktop/newnew.png; sourceTree = "<group>"; };
-		9352E13E23CFB6780087ACA3 /* macbookpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macbookpro.png; path = ../../../../Desktop/macbookpro.png; sourceTree = "<group>"; };
 		9352E13F23CFB6780087ACA3 /* macpro71.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = macpro71.png; path = ../../../../Desktop/macpro71.png; sourceTree = "<group>"; };
 		9352E14023CFB6780087ACA3 /* imacpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = imacpro.png; path = ../../../../Desktop/imacpro.png; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,9 +86,6 @@
 			children = (
 				9352E13823CFB6770087ACA3 /* imac.png */,
 				9352E14023CFB6780087ACA3 /* imacpro.png */,
-				9352E13E23CFB6780087ACA3 /* macbookpro.png */,
-				9352E13A23CFB6770087ACA3 /* macmininew.png */,
-				9352E13923CFB6770087ACA3 /* macminiold.png */,
 				9352E13C23CFB6780087ACA3 /* macpro.png */,
 				9352E13B23CFB6780087ACA3 /* macpro61.png */,
 				9352E13F23CFB6780087ACA3 /* macpro71.png */,
@@ -210,10 +201,7 @@
 				9352E14623CFB6780087ACA3 /* newnew.png in Resources */,
 				9352E14923CFB6780087ACA3 /* imacpro.png in Resources */,
 				CFE1F35A23B51A7000B747E1 /* Sparkle.framework.dSYM in Resources */,
-				9352E14223CFB6780087ACA3 /* macminiold.png in Resources */,
-				9352E14723CFB6780087ACA3 /* macbookpro.png in Resources */,
 				9352E14823CFB6780087ACA3 /* macpro71.png in Resources */,
-				9352E14323CFB6780087ACA3 /* macmininew.png in Resources */,
 				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
