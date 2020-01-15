@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9326784523CFCB5600BD4A4E /* macpro71.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784023CFCB5500BD4A4E /* macpro71.png */; };
+		9326784623CFCB5600BD4A4E /* macpro61.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784123CFCB5600BD4A4E /* macpro61.png */; };
+		9326784723CFCB5600BD4A4E /* imacpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784223CFCB5600BD4A4E /* imacpro.png */; };
+		9326784823CFCB5600BD4A4E /* imac.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784323CFCB5600BD4A4E /* imac.png */; };
+		9326784923CFCB5600BD4A4E /* macpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784423CFCB5600BD4A4E /* macpro.png */; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
@@ -34,6 +39,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9326784023CFCB5500BD4A4E /* macpro71.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro71.png; sourceTree = "<group>"; };
+		9326784123CFCB5600BD4A4E /* macpro61.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro61.png; sourceTree = "<group>"; };
+		9326784223CFCB5600BD4A4E /* imacpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imacpro.png; sourceTree = "<group>"; };
+		9326784323CFCB5600BD4A4E /* imac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imac.png; sourceTree = "<group>"; };
+		9326784423CFCB5600BD4A4E /* macpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro.png; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8D21E121D722FC00C0A72D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +79,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9352E13523CFB5DF0087ACA3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9326784323CFCB5600BD4A4E /* imac.png */,
+				9326784223CFCB5600BD4A4E /* imacpro.png */,
+				9326784423CFCB5600BD4A4E /* macpro.png */,
+				9326784123CFCB5600BD4A4E /* macpro61.png */,
+				9326784023CFCB5500BD4A4E /* macpro71.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		CF8D21D321D722FC00C0A72D = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +114,7 @@
 			children = (
 				CF8D21EF21D7232400C0A72D /* getPlist.swift */,
 				CFB288FA22D2A77600D229E9 /* setPlist.swift */,
+				9352E13523CFB5DF0087ACA3 /* Images */,
 				CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */,
 				CF8D21E121D722FC00C0A72D /* ViewController.swift */,
 				CF8D21E321D722FE00C0A72D /* Assets.xcassets */,
@@ -167,8 +190,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9326784623CFCB5600BD4A4E /* macpro61.png in Resources */,
+				9326784923CFCB5600BD4A4E /* macpro.png in Resources */,
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
+				9326784723CFCB5600BD4A4E /* imacpro.png in Resources */,
 				CF8D21E721D722FE00C0A72D /* Main.storyboard in Resources */,
+				9326784523CFCB5600BD4A4E /* macpro71.png in Resources */,
+				9326784823CFCB5600BD4A4E /* imac.png in Resources */,
 				CFE1F35A23B51A7000B747E1 /* Sparkle.framework.dSYM in Resources */,
 				CFB08C8221E1BDFE008C5465 /* Readme.md in Resources */,
 			);
@@ -329,7 +357,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5DG8PLV54H;
+				CURRENT_PROJECT_VERSION = 150120;
+				DEVELOPMENT_TEAM = 6KD4748A22;
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -339,7 +368,7 @@
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 2.8.9;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -356,7 +385,8 @@
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5DG8PLV54H;
+				CURRENT_PROJECT_VERSION = 150120;
+				DEVELOPMENT_TEAM = 6KD4748A22;
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -366,7 +396,7 @@
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 2.8.9;
+				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";

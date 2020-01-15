@@ -18,6 +18,7 @@ class ViewController: NSViewController {
     let miniPState = 0
     let setID = -1
     var AMDDictionary = [
+        "RX 5500XT": "Vendor1002Device7340",
         "Radeon VII": "Vendor1002Device66af",
         "R9 270": "Vendor1002Device6811",
         "R9 270X": "Vendor1002Device6810",
@@ -83,6 +84,11 @@ class ViewController: NSViewController {
     @IBOutlet weak var NvidiaMenu: NSPopUpButton!
     @IBOutlet weak var AMDCheck: NSButton!
     @IBOutlet weak var NvidiaCheck: NSButton!
+    @IBOutlet weak var amdimage: NSImageView!
+    @IBOutlet weak var smbiosImage: NSImageView!
+    @IBOutlet weak var nvidiaImage: NSImageView!
+    
+    
     
     override func viewDidLoad() {
         AMDMenu.isHidden = true
@@ -281,14 +287,81 @@ class ViewController: NSViewController {
         }
     }
     
+    
+    
     @IBAction func AMDChecked(_ sender: NSButton) {
         AMDMenu.isHidden = (sender.state == .off)
         NvidiaCheck.isHidden = (sender.state == .on)
+        nvidiaImage.isHidden = (sender.state == .on)
     }
     
     @IBAction func NvidiaChecked(_ sender: NSButton) {
         NvidiaMenu.isHidden = (sender.state == .off)
         AMDCheck.isHidden = (sender.state == .on)
+        amdimage.isHidden = (sender.state == .on)
+    }
+    @IBAction func imageSelection(_ sender: Any) {
+        let userSelected = machineSelected.titleOfSelectedItem
+        switch userSelected {
+        case "iMacPro1,1":
+            smbiosImage.image = NSImage(named: "imacpro.png")
+        case "MacPro4,1":
+            smbiosImage.image = NSImage(named: "macpro.png")
+        case "iMac19,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac18,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac17,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac16,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac15,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac14,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac13,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac12,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac11,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac10,1":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac19,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac18,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac18,3":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac16,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac15,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac14,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac14,3":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac14,4":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac13,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac13,3":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac12,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac11,2":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "iMac11,3":
+            smbiosImage.image = NSImage(named: "imac.png")
+            case "MacPro6,1":
+            smbiosImage.image = NSImage(named: "macpro61.png")
+            case "MacPro7,1":
+            smbiosImage.image = NSImage(named: "macpro71.png")
+            case "MacPro5,1":
+            smbiosImage.image = NSImage(named: "macpro.png")
+        default:
+            smbiosImage.image = NSImage(named: "")
+        }
     }
     
     @IBAction func generateButton(_ sender: Any) {
