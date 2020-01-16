@@ -738,7 +738,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uG-hc-ubn">
-                                <rect key="frame" x="529" y="332" width="115" height="25"/>
+                                <rect key="frame" x="491" y="335" width="115" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qV9-YC-UND" id="NxG-zw-ZBK">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -753,9 +753,9 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwX-w5-8ph">
-                                <rect key="frame" x="461" y="340" width="52" height="18"/>
+                                <rect key="frame" x="461" y="340" width="22" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="AMD" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cg0-mP-Oxj">
+                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cg0-mP-Oxj">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -764,9 +764,9 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PWP-1s-b9f">
-                                <rect key="frame" x="461" y="277" width="60" height="18"/>
+                                <rect key="frame" x="461" y="277" width="22" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Nvidia" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BUO-IH-rQf">
+                                <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BUO-IH-rQf">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -796,11 +796,6 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="exo-jd-LTp">
-                                <rect key="frame" x="66" y="387" width="613" height="161"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AGPMInjector" id="Fno-fW-z9v"/>
-                            </imageView>
                             <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="XZT-NN-qwk">
                                 <rect key="frame" x="20" y="385" width="670" height="5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -819,17 +814,17 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="LCR-LW-tFw">
-                                <rect key="frame" x="407" y="335" width="48" height="48"/>
+                                <rect key="frame" x="407" y="325" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="amd-radeon" id="GlN-Ft-bJN"/>
                             </imageView>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="z8j-dN-YJ2">
-                                <rect key="frame" x="407" y="272" width="48" height="48"/>
+                                <rect key="frame" x="407" y="262" width="48" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="nvidia-icon" id="1ZW-13-LFQ"/>
                             </imageView>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mvU-Rs-wrN">
-                                <rect key="frame" x="529" y="269" width="115" height="25"/>
+                                <rect key="frame" x="491" y="272" width="115" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2o1-BA-Rkr" id="YE2-re-BLP">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -849,7 +844,7 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                                 <imageCell key="cell" alignment="left" imageScaling="proportionallyDown" image="macpro" id="KV1-hV-vyH"/>
                             </imageView>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEH-oe-swK">
-                                <rect key="frame" x="125" y="303" width="133" height="25"/>
+                                <rect key="frame" x="125" y="316" width="133" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cBc-8F-1df" id="v33-Z2-19j">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -866,6 +861,11 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                                     <action selector="imageSelection:" target="XfG-lQ-9wD" id="fnm-sM-IiN"/>
                                 </connections>
                             </popUpButton>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="exo-jd-LTp">
+                                <rect key="frame" x="49" y="396" width="613" height="161"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="AGPMInjector" id="Fno-fW-z9v"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <connections>
@@ -873,7 +873,6 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                         <outlet property="AMDMenu" destination="8uG-hc-ubn" id="FGM-zV-IEU"/>
                         <outlet property="NvidiaCheck" destination="PWP-1s-b9f" id="Cy3-6F-W3e"/>
                         <outlet property="NvidiaMenu" destination="mvU-Rs-wrN" id="Uqn-4Z-9Ib"/>
-                        <outlet property="SMBIOSimage" destination="Y5d-vs-X0D" id="qCb-Eu-gdo"/>
                         <outlet property="amdimage" destination="LCR-LW-tFw" id="Rda-yq-OhX"/>
                         <outlet property="machineSelected" destination="bEH-oe-swK" id="Ypc-xD-qQC"/>
                         <outlet property="nvidiaImage" destination="z8j-dN-YJ2" id="mNW-yU-RuV"/>
@@ -883,11 +882,11 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="vSa-OP-nTH"/>
             </objects>
-            <point key="canvasLocation" x="104" y="857.5"/>
+            <point key="canvasLocation" x="75" y="845"/>
         </scene>
     </scenes>
     <resources>
-        <image name="AGPMInjector" width="4500" height="1500"/>
+        <image name="AGPMInjector" width="9000" height="3000"/>
         <image name="amd-radeon" width="50" height="50"/>
         <image name="macpro" width="100" height="100"/>
         <image name="nvidia-icon" width="50" height="50"/>
