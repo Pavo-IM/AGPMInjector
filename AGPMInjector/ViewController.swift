@@ -5,7 +5,7 @@ class ViewController: NSViewController {
     let getAGPMFilePath = "/System/Library/Extensions/AppleGraphicsPowerManagement.kext/Contents/Info.plist"
     let bundleID = "com.apple.driver.AGPMInjector"
     let bundleName = "AGPMInjector"
-    let bundleShortVersionName = "3.0-AGPMInjector"
+    let bundleShortVersionName = "3.2-AGPMInjector"
     let bundleSig = "????"
     // Create Decoder object
     let plistDecoder = PropertyListDecoder()
@@ -305,60 +305,15 @@ class ViewController: NSViewController {
         switch userSelected {
         case "iMacPro1,1":
             smbiosImage.image = NSImage(named: "imacpro.png")
-        case "MacPro4,1":
+        case "MacPro4,1", "MacPro5,1":
             smbiosImage.image = NSImage(named: "macpro.png")
-        case "iMac19,1":
+        case "iMac19,1", "iMac11,3", "iMac18,1", "iMac17,1", "iMac16,1", "iMac15,1", "iMac14,1", "iMac13,1", "iMac12,1", "iMac11,1", "iMac10,1", "iMac19,2", "iMac18,2",
+             "iMac18,3", "iMac16,2", "iMac15,2", "iMac14,2", "iMac14,3", "iMac14,4", "iMac13,2", "iMac13,3", "iMac12,2", "iMac11,2":
             smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac18,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac17,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac16,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac15,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac14,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac13,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac12,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac11,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac10,1":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac19,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac18,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac18,3":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac16,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac15,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac14,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac14,3":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac14,4":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac13,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac13,3":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac12,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac11,2":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "iMac11,3":
-            smbiosImage.image = NSImage(named: "imac.png")
-            case "MacPro6,1":
+        case "MacPro6,1":
             smbiosImage.image = NSImage(named: "macpro61.png")
-            case "MacPro7,1":
+        case "MacPro7,1":
             smbiosImage.image = NSImage(named: "macpro71.png")
-            case "MacPro5,1":
-            smbiosImage.image = NSImage(named: "macpro.png")
         default:
             smbiosImage.image = NSImage(named: "")
         }
