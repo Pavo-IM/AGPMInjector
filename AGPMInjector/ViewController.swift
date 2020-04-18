@@ -18,6 +18,7 @@ class ViewController: NSViewController {
     let miniPState = 0
     let setID = -1
     var AMDDictionary = [
+        "RX 5600XT": "Vendor1002Device731F",
         "RX 5500XT": "Vendor1002Device7340",
         "Radeon VII": "Vendor1002Device66af",
         "R9 270": "Vendor1002Device6811",

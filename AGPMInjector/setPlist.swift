@@ -101,6 +101,7 @@ struct setGpu: Encodable {
     let minPowerState: Int
 
     enum Gputype: String, CodingKey, Codable {
+        case RX5600XT = "Vendor1002Device731F"
         case RX5500XT = "Vendor1002Device7340"
         case RX5700XT = "Vendor1002Device731f"
         case RadeonVII = "Vendor1002Device66af"
