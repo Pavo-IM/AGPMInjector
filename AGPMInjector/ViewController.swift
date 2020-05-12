@@ -31,7 +31,7 @@ class ViewController: NSViewController {
         "R9 290": "Vendor1002Device67b1",
         "R9 390": "Vendor1002Device67b1",
         "R9 290X": "Vendor1002Device67b0",
-        "RP 390X": "Vendor1002Device67b0",
+        "R9 390X": "Vendor1002Device67b0",
         "R9 Fury": "Vendor1002Device7300",
         "RX 460": "Vendor1002Device67ef",
         "RX 550": "Vendor1002Device699f",
