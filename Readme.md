@@ -1,4 +1,4 @@
-AGPM Injector  [![Build Status](https://app.bitrise.io/app/f8989a730f43aa26/status.svg?token=8uUQ6i6gfnLO8u5cvHhzaA&branch=master)](https://app.bitrise.io/app/f8989a730f43aa26)
+AGPM Injector  [![Build Status](https://app.bitrise.io/app/7da5df68f87d8ead/status.svg?token=0ZvDsUsWHjLzXz1EA_IuYQ&branch=master)](https://app.bitrise.io/app/7da5df68f87d8ead)
 =============
 ##### This is a AGPM (Apple Graphics Power Management) Injector kext generator.
 
