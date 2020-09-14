@@ -224,7 +224,8 @@ class ViewController: NSViewController {
         renameItemInArray(olditem: "Mac-FFE5EF870D7BA81A", newitem: "iMac16,2")
         renameItemInArray(olditem: "Mac-63001698E7A34814", newitem: "iMac19,2")
         renameItemInArray(olditem: "Mac-AA95B1DDAB278B95", newitem: "iMac19,1")
-        
+        renameItemInArray(olditem: "Mac-AF89B6D9451A490B", newitem: "iMac20,2")
+        renameItemInArray(olditem: "Mac-CFF7D910A743CAAF", newitem: "iMac20,1")
         let sortedArray = machineArray.sorted()
         let sortedAMDDictionary = AMDDictionary.keys.sorted()
         let sortedNvidiaDictionary = NvidiaDictionary.keys.sorted()
@@ -317,7 +318,7 @@ class ViewController: NSViewController {
         case "MacPro4,1", "MacPro5,1":
             smbiosImage.image = NSImage(named: "macpro.png")
         case "iMac19,1", "iMac11,3", "iMac18,1", "iMac17,1", "iMac16,1", "iMac15,1", "iMac14,1", "iMac13,1", "iMac12,1", "iMac11,1", "iMac10,1", "iMac19,2", "iMac18,2",
-             "iMac18,3", "iMac16,2", "iMac15,2", "iMac14,2", "iMac14,3", "iMac14,4", "iMac13,2", "iMac13,3", "iMac12,2", "iMac11,2":
+             "iMac18,3", "iMac16,2", "iMac15,2", "iMac14,2", "iMac14,3", "iMac14,4", "iMac13,2", "iMac13,3", "iMac12,2", "iMac11,2", "iMac20,1", "iMac20,2":
             smbiosImage.image = NSImage(named: "imac.png")
         case "MacPro6,1":
             smbiosImage.image = NSImage(named: "macpro61.png")
