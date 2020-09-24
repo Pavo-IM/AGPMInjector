@@ -89,6 +89,8 @@ struct setMachine: Encodable {
         case iMac183 = "iMac18,3"
         case iMac191 = "iMac19,1"
         case iMac192 = "iMac19,2"
+        case iMac201 = "iMac20,1"
+        case iMac202 = "iMac20,2"
      }
 }
 
