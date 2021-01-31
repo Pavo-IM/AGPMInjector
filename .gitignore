@@ -2,3 +2,4 @@
 .DS_Store
 .Carthage/
 .Carthage/Build/
+.bitrise.secrets.yml

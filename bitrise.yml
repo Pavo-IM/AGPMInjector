@@ -1,0 +1,49 @@
+format_version: "8"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: macos
+app:
+  envs:
+  - BITRISE_PROJECT_PATH: AGPMInjector.xcodeproj
+    opts:
+      is_expand: false
+  - BITRISE_SCHEME: AGPMInjector
+    opts:
+      is_expand: false
+  - BITRISE_EXPORT_METHOD: development
+    opts:
+      is_expand: false
+trigger_map:
+- push_branch: '*'
+  workflow: primary
+- pull_request_source_branch: '*'
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - cache-pull@2: {}
+    - certificate-and-profile-installer@1: {}
+    - script@1:
+        title: Do anything with Script step
+        inputs:
+        - content: |-
+            #!/bin/bash
+
+            # ---- Get Current Bundle Version:
+            build_version="$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $BITRISE_SOURCE_DIR/OC\ Gen-X/Info.plist)"
+            short_bundle_version=`sed -n '/MARKETING_VERSION/{s/MARKETING_VERSION = //;s/;//;s/^[[:space:]]*//;p;q;}' $BITRISE_SOURCE_DIR/OC\ Gen-X.xcodeproj/project.pbxproj`
+            CONFIG_build_version=${build_version}
+            CONFIG_short_bundle_version=${short_bundle_version}
+
+            # ---- Set Build And Bundle Version ENV:
+            envman add --key "CURRENT_BUILD_VERSION" --value "${CONFIG_build_version}"
+            envman add --key "CURRENT_SHORT_BUNDLE_VERSION" --value "${CONFIG_short_bundle_version}"
+    - xcode-archive-mac@1:
+        inputs:
+        - project_path: $BITRISE_PROJECT_PATH
+        - scheme: $BITRISE_SCHEME
+        - export_method: $BITRISE_EXPORT_METHOD
+    - deploy-to-bitrise-io@1: {}
+    - cache-push@2: {}

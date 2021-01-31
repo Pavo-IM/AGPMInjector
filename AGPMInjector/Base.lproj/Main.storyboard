@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -683,7 +683,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AGPMInjector" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-                <customObject id="L3s-AP-crP" customClass="SUUpdater"/>
+                <customObject id="L3s-AP-crP" customClass="SPUStandardUpdaterController"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="19"/>
@@ -718,7 +718,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="3qv-af-TXY">
-                                <rect key="frame" x="329" y="131" width="116" height="91"/>
+                                <rect key="frame" x="354" y="131" width="66" height="91"/>
                                 <buttonCell key="cell" type="smallSquare" title="Generate" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3B8-dn-ocH">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" size="13" name="ArialRoundedMTBold"/>
@@ -736,7 +736,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8uG-hc-ubn">
-                                <rect key="frame" x="507" y="336" width="145" height="25"/>
+                                <rect key="frame" x="506" y="335" width="147" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qV9-YC-UND" id="NxG-zw-ZBK">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -809,7 +809,7 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="nvidia-icon" id="1ZW-13-LFQ"/>
                             </imageView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mvU-Rs-wrN">
-                                <rect key="frame" x="507" y="273" width="145" height="25"/>
+                                <rect key="frame" x="506" y="272" width="147" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2o1-BA-Rkr" id="YE2-re-BLP">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -827,7 +827,7 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                                 <imageCell key="cell" alignment="left" imageScaling="proportionallyDown" image="macpro" id="KV1-hV-vyH"/>
                             </imageView>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bEH-oe-swK">
-                                <rect key="frame" x="128" y="324" width="101" height="25"/>
+                                <rect key="frame" x="127" y="324" width="103" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="cBc-8F-1df" id="v33-Z2-19j">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -859,7 +859,6 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                             <constraint firstItem="UjB-Yf-iff" firstAttribute="top" secondItem="Y5d-vs-X0D" secondAttribute="top" id="2pN-0X-gPJ"/>
                             <constraint firstItem="8uG-hc-ubn" firstAttribute="leading" secondItem="dwX-w5-8ph" secondAttribute="trailing" constant="20" id="5XR-kr-Jjv"/>
                             <constraint firstItem="mvU-Rs-wrN" firstAttribute="leading" secondItem="8uG-hc-ubn" secondAttribute="leading" id="7ig-Cx-Rct"/>
-                            <constraint firstItem="3qv-af-TXY" firstAttribute="leading" secondItem="K75-gj-yNU" secondAttribute="leading" id="99r-S4-zNh"/>
                             <constraint firstItem="bEH-oe-swK" firstAttribute="top" secondItem="UjB-Yf-iff" secondAttribute="bottom" constant="20" id="9Bo-WU-lRF"/>
                             <constraint firstItem="Y5d-vs-X0D" firstAttribute="top" secondItem="XZT-NN-qwk" secondAttribute="bottom" constant="10" id="CLw-nB-emc"/>
                             <constraint firstItem="dWK-1X-jJK" firstAttribute="top" secondItem="K75-gj-yNU" secondAttribute="bottom" constant="10" id="Cvv-lf-I4D"/>
@@ -876,7 +875,6 @@ o Click the Generate button to generate the AGPMInjector.kext. This kext will be
                             <constraint firstItem="mvU-Rs-wrN" firstAttribute="trailing" secondItem="8uG-hc-ubn" secondAttribute="trailing" id="Q7Z-49-cyq"/>
                             <constraint firstItem="3qv-af-TXY" firstAttribute="top" secondItem="doL-qd-HqS" secondAttribute="bottom" constant="20" id="ROs-zS-9ZZ"/>
                             <constraint firstItem="dWK-1X-jJK" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="RVS-0j-N8o"/>
-                            <constraint firstItem="3qv-af-TXY" firstAttribute="trailing" secondItem="K75-gj-yNU" secondAttribute="trailing" id="TGy-ol-hXb"/>
                             <constraint firstItem="K75-gj-yNU" firstAttribute="top" secondItem="3qv-af-TXY" secondAttribute="bottom" constant="20" id="UMo-kk-GE2"/>
                             <constraint firstItem="Y5d-vs-X0D" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="bM0-oG-JXf"/>
                             <constraint firstItem="doL-qd-HqS" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="bdd-GP-Vcx"/>
