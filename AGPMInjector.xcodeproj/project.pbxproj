@@ -14,8 +14,6 @@
 		9326784923CFCB5600BD4A4E /* macpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784423CFCB5600BD4A4E /* macpro.png */; };
 		CF50E40225C72093005935DB /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FC25C72087005935DB /* Sparkle.framework */; };
 		CF50E40325C72093005935DB /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FC25C72087005935DB /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CF50E40425C72096005935DB /* SparkleCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FE25C72088005935DB /* SparkleCore.framework */; };
-		CF50E40525C72096005935DB /* SparkleCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FE25C72088005935DB /* SparkleCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CF50E40625C72297005935DB /* XPCServices in Resources */ = {isa = PBXBuildFile; fileRef = CF50E3FD25C72087005935DB /* XPCServices */; };
 		CF50E40925C722F7005935DB /* generate_appcast in Resources */ = {isa = PBXBuildFile; fileRef = CF50E40725C722F7005935DB /* generate_appcast */; };
 		CF50E40A25C722F7005935DB /* generate_keys in Resources */ = {isa = PBXBuildFile; fileRef = CF50E40825C722F7005935DB /* generate_keys */; };
@@ -35,7 +33,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CF50E40525C72096005935DB /* SparkleCore.framework in Embed Frameworks */,
 				CF50E40325C72093005935DB /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -51,7 +48,6 @@
 		9326784423CFCB5600BD4A4E /* macpro.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = macpro.png; sourceTree = "<group>"; };
 		CF50E3FC25C72087005935DB /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		CF50E3FD25C72087005935DB /* XPCServices */ = {isa = PBXFileReference; lastKnownFileType = folder; path = XPCServices; sourceTree = "<group>"; };
-		CF50E3FE25C72088005935DB /* SparkleCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SparkleCore.framework; sourceTree = "<group>"; };
 		CF50E40725C722F7005935DB /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
 		CF50E40825C722F7005935DB /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF50E40425C72096005935DB /* SparkleCore.framework in Frameworks */,
 				CF50E40225C72093005935DB /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,20 +86,12 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
-		CF50E3EB25C71AB0005935DB /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		CF50E3FB25C72079005935DB /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
 				CF50E40725C722F7005935DB /* generate_appcast */,
 				CF50E40825C722F7005935DB /* generate_keys */,
 				CF50E3FC25C72087005935DB /* Sparkle.framework */,
-				CF50E3FE25C72088005935DB /* SparkleCore.framework */,
 				CF50E3FD25C72087005935DB /* XPCServices */,
 			);
 			path = "Support Files";
@@ -117,7 +104,6 @@
 				CFB08C8121E1BDFE008C5465 /* Readme.md */,
 				CF8D21DE21D722FC00C0A72D /* AGPMInjector */,
 				CF8D21DD21D722FC00C0A72D /* Products */,
-				CF50E3EB25C71AB0005935DB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -173,7 +159,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = Pavo;
 				TargetAttributes = {
 					CF8D21DB21D722FC00C0A72D = {
@@ -378,14 +364,13 @@
 		CF8D21ED21D722FE00C0A72D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AGPMInjector/AGPMInjector.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -400,7 +385,7 @@
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.3.1;
+				MARKETING_VERSION = 3.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -411,14 +396,13 @@
 		CF8D21EE21D722FE00C0A72D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AGPMInjector/AGPMInjector.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_TEAM = 5DG8PLV54H;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -433,7 +417,7 @@
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.3.1;
+				MARKETING_VERSION = 3.3.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
