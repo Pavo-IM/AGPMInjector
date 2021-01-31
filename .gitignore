@@ -3,3 +3,4 @@
 .Carthage/
 .Carthage/Build/
 .bitrise.secrets.yml
+Support Files/private-key-file
