@@ -12,11 +12,13 @@
 		9326784723CFCB5600BD4A4E /* imacpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784223CFCB5600BD4A4E /* imacpro.png */; };
 		9326784823CFCB5600BD4A4E /* imac.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784323CFCB5600BD4A4E /* imac.png */; };
 		9326784923CFCB5600BD4A4E /* macpro.png in Resources */ = {isa = PBXBuildFile; fileRef = 9326784423CFCB5600BD4A4E /* macpro.png */; };
-		CF50E40025C72088005935DB /* XPCServices in Resources */ = {isa = PBXBuildFile; fileRef = CF50E3FD25C72087005935DB /* XPCServices */; };
 		CF50E40225C72093005935DB /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FC25C72087005935DB /* Sparkle.framework */; };
 		CF50E40325C72093005935DB /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FC25C72087005935DB /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CF50E40425C72096005935DB /* SparkleCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FE25C72088005935DB /* SparkleCore.framework */; };
 		CF50E40525C72096005935DB /* SparkleCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CF50E3FE25C72088005935DB /* SparkleCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CF50E40625C72297005935DB /* XPCServices in Resources */ = {isa = PBXBuildFile; fileRef = CF50E3FD25C72087005935DB /* XPCServices */; };
+		CF50E40925C722F7005935DB /* generate_appcast in Resources */ = {isa = PBXBuildFile; fileRef = CF50E40725C722F7005935DB /* generate_appcast */; };
+		CF50E40A25C722F7005935DB /* generate_keys in Resources */ = {isa = PBXBuildFile; fileRef = CF50E40825C722F7005935DB /* generate_keys */; };
 		CF8D21E021D722FC00C0A72D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */; };
 		CF8D21E221D722FC00C0A72D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8D21E121D722FC00C0A72D /* ViewController.swift */; };
 		CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF8D21E321D722FE00C0A72D /* Assets.xcassets */; };
@@ -50,6 +52,8 @@
 		CF50E3FC25C72087005935DB /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		CF50E3FD25C72087005935DB /* XPCServices */ = {isa = PBXFileReference; lastKnownFileType = folder; path = XPCServices; sourceTree = "<group>"; };
 		CF50E3FE25C72088005935DB /* SparkleCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SparkleCore.framework; sourceTree = "<group>"; };
+		CF50E40725C722F7005935DB /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
+		CF50E40825C722F7005935DB /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
 		CF8D21DC21D722FC00C0A72D /* AGPMInjector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AGPMInjector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF8D21DF21D722FC00C0A72D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF8D21E121D722FC00C0A72D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 		CF50E3FB25C72079005935DB /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				CF50E40725C722F7005935DB /* generate_appcast */,
+				CF50E40825C722F7005935DB /* generate_keys */,
 				CF50E3FC25C72087005935DB /* Sparkle.framework */,
 				CF50E3FE25C72088005935DB /* SparkleCore.framework */,
 				CF50E3FD25C72087005935DB /* XPCServices */,
@@ -205,8 +211,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF50E40025C72088005935DB /* XPCServices in Resources */,
+				CF50E40625C72297005935DB /* XPCServices in Resources */,
+				CF50E40A25C722F7005935DB /* generate_keys in Resources */,
 				9326784623CFCB5600BD4A4E /* macpro61.png in Resources */,
+				CF50E40925C722F7005935DB /* generate_appcast in Resources */,
 				9326784923CFCB5600BD4A4E /* macpro.png in Resources */,
 				CF8D21E421D722FE00C0A72D /* Assets.xcassets in Resources */,
 				9326784723CFCB5600BD4A4E /* imacpro.png in Resources */,
@@ -392,7 +400,7 @@
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -425,7 +433,7 @@
 				INFOPLIST_FILE = AGPMInjector/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.3.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pavo.AGPMInjector;
 				PRODUCT_NAME = "$(TARGET_NAME)";

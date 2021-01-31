@@ -31,8 +31,8 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>SUFeedURL</key>
-	<string>https://agpminjector.herokuapp.com/AGPMInjector/appcast.xml</string>
-	<key>SUShowReleaseNotes</key>
-	<false/>
+	<string>https://github.com/Pavo-IM/AGPMInjector/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string></string>
 </dict>
 </plist>
