@@ -47,7 +47,9 @@ class ViewController: NSViewController {
         "Pro Duo": "Vendor1002Device67c4",
         "W 7100": "Vendor1002Device692b",
         "W 9100": "Vendor1002Device67a0",
-        "RX 5700XT": "Vendor1002Device731f"
+        "RX 5700XT": "Vendor1002Device731f",
+        "RX 6800XT": "Vendor1002Device73bf",
+        "RX 6900XT": "Vendor1002Device73bf"
     ]
     
     var NvidiaDictionary = [
